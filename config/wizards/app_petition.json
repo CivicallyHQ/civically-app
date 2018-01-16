@@ -1,0 +1,69 @@
+{
+  "id": "app_petition",
+  "name": "App Petition",
+  "background": "AliceBlue",
+  "save_submissions": true,
+  "steps": [
+    {
+      "id": "intro",
+      "key": "app.petition.intro"
+    },
+    {
+      "id": "repository",
+      "key": "app.petition.repository",
+      "fields": [
+        {
+          "id": "repository_url",
+          "type": "text",
+          "key": "app.petition.repository.url",
+          "min_length": "15",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "details",
+      "key": "app.petition.details",
+      "fields": [
+        {
+          "id": "name",
+          "type": "text",
+          "key": "app.petition.details.name",
+          "required": true,
+          "min_length": "10"
+        },
+        {
+          "id": "post",
+          "type": "textarea",
+          "key": "app.petition.details.post",
+          "required": true,
+          "min_length": "200"
+        }
+      ]
+    },
+    {
+      "id": "place",
+      "key": "app.petition.place",
+      "fields": [
+        {
+          "id": "category_id",
+          "type": "dropdown",
+          "required": false,
+          "choices_preset": "categories",
+          "choices_filters": [
+            {
+              "key": "custom_fields.place",
+              "value": "true"
+            }
+          ],
+          "choices_type": "preset",
+          "dropdown_none": "app.place_none"
+        }
+      ]
+    },
+    {
+      "id": "submit",
+      "key": "app.petition.submit"
+    }
+  ]
+}

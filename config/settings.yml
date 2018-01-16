@@ -1,0 +1,15 @@
+plugins:
+  app_petition_category_id:
+    type: category_list
+    default: 1
+    client: true
+  app_category_id:
+    type: category_list
+    default: 1
+    client: true
+  app_store_enabled:
+    default: false
+    client: true
+  app_store_redirect_url:
+    default: '/'
+    client: true

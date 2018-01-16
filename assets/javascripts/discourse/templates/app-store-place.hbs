@@ -1,0 +1,22 @@
+<div class="app-store">
+  {{#link-to 'app.store'}}
+    <div class="p-text large">
+      {{d-icon 'chevron-left'}}
+    </div>
+  {{/link-to}}
+  <div class="p-text large">
+    {{place-label currentUser.place_category_id}}
+  </div>
+  <a href='/w/app-petition' target='_blank'>
+    <div class="pull-right submit p-text p-link">
+      {{i18n 'app.petition.title'}}
+    </div>
+  </a>
+  <div class='app-place'>
+    <div class="store-apps">
+      {{#each model as |a|}}
+        {{app-card app=a}}
+      {{/each}}
+    </div>
+  </div>
+</div>

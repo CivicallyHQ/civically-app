@@ -1,0 +1,49 @@
+en:
+  js:
+    app:
+      guest: "You need an account to use this feature"
+      no_results: "No apps available"
+      side:
+        left: "Left"
+        right: "Right"
+      petition:
+        title: "Submit App"
+      add:
+        title: "Add App"
+        body: "Select a side for {{appTitle}}"
+        btn: "Add"
+      added:
+        btn: "Added"
+      authors: "authors"
+      remove:
+        title: "Remove App"
+        body: "Are you sure you want to remove <b>{{appTitle}}</b> from your account?"
+        btn: "Remove"
+      user:
+        label: "Apps"
+        title: 'Your Apps'
+        side: "Side"
+      store:
+        label: "App Store"
+        link: "Add Apps"
+        general: "General"
+        page: "Store Page"
+
+    topic:
+      type:
+        app_submit:
+          title_placeholder: "Use a clear and simple name"
+          body_placeholder: "Describe what the app does"
+
+    petition:
+      app:
+        topic_title_start: "New App: "
+        petitioner: "Thank you for submitting an app. We will be in touch shortly by replying on this topic. You can add further detail to your submission by editing your post below."
+        intro: "This is a petition for an app."
+        resolution:
+          accepted: "This petition for an app has been accepted. <a href='{{link}}' class='p-text p-link'>Check out the app on the store</a>."
+          rejected: "This petition for an app has been rejected. <a href='/faq#submitting-an-app' target='_blank'>Learn more about submitting a new app</a>."
+
+  wizard_js:
+    app:
+      place_none: "Select a Place"

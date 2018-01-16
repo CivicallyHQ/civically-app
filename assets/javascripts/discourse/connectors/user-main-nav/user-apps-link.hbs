@@ -1,0 +1,6 @@
+{{#link-to 'user.apps'}}
+  {{d-icon "rocket"}}{{i18n 'app.user.label'}}
+  {{#unless siteSettings.app_store_enabled}}
+    {{coming-soon}}
+  {{/unless}}
+{{/link-to}}

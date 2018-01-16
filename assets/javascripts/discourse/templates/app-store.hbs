@@ -1,0 +1,37 @@
+<div class="app-store">
+  <a href='/w/app-petition' target='_blank'>
+    <div class="pull-right submit p-text p-link">
+      {{i18n 'app.petition.title'}}
+    </div>
+  </a>
+  <div class="app-general">
+    <div class="store-title">
+      {{#link-to 'app.storeGeneral'}}
+        <div class="p-text p-link large">
+          {{i18n 'app.store.general'}}
+        </div>
+      {{/link-to}}
+    </div>
+    <div class="store-apps inline">
+      {{#each generalApps as |a|}}
+        {{app-card app=a}}
+      {{/each}}
+    </div>
+  </div>
+  {{#if showPlaceApps}}
+    <div class='app-place'>
+      <div class="store-title">
+        {{#link-to 'app.storeplace'}}
+          <div class="p-text p-link large">
+            {{place-label currentUser.place_category_id}}
+          </div>
+        {{/link-to}}
+      </div>
+      <div class="store-apps inline">
+        {{#each placeApps as |a|}}
+          {{app-card app=a}}
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+</div>

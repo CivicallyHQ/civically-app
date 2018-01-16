@@ -1,0 +1,15 @@
+<div class="app-contents">
+  <div class="app-title">
+    {{app-title app}}
+    <div class="app-version">{{app.version}}</div>
+    {{#if canRemove}}
+      <a class="app-remove" {{action 'removeApp'}}>
+        {{i18n 'app.remove.btn'}}
+      </a>
+    {{/if}}
+  </div>
+  <div class="app-side">
+    <span>{{i18n 'app.user.side'}}:</span>
+    {{app.side}}
+  </div>
+</div>

@@ -1,0 +1,65 @@
+en:
+  site_settings:
+    app_petition_category_id: "App petition category id"
+    app_category_id: "App category id"
+    app_store_enabled: "App store enabled"
+    app_store_redirect_url: "App store redirect url"
+
+  app:
+    petition:
+      procedure: "When you submit your app, a new topic will be created in <a href='/c/app-submissions' target='_blank'>App Submissions</a>.
+                  The Civically team and the place will review your submission in that topic."
+      intro:
+        title: "App Petition"
+        description: |
+          Any user can petition for an app to be added to Civically.
+          <br>
+          <img class='large' src='%{base_url}/plugins/civically-place/images/woman_computer.svg'>
+          <br>
+          Please read <a href='/faq#app_submission'>Adding an App</a> before you start.
+
+      repository:
+        title: "Repository"
+        description: "Currently, all apps on Civically must be open source and hosted on GitHub or Bitbucket."
+        url:
+          label: "Repository Url"
+          placeholder: "e.g. https://github.com/angusmcleod/discourse-locations"
+          error: "App repository url is required."
+        error:
+          invalid: "Please add a valid url"
+          wrong_host: "Currently, all apps must be hosted on GitHub or Bitbucket."
+          not_available: "We couldn't access your app repository"
+          duplicate: "Repository has already been submitted: <a href='%{url}'>%{title}</a>"
+      details:
+        title: "Details"
+        description: "Give your app a name and description."
+        name:
+          label: "Name"
+          placeholder: "e.g. Neighborhood Alerts"
+          error: "App name is required."
+        error:
+          identical: "Name is already used: <a href='%{url}'>%{title}</a>"
+        post:
+          label: "Description"
+          placeholder: "Explain what your app does."
+          error: "App description is required."
+      place:
+        title: "Place (optional)"
+        description: |
+          Apps can either be General or for a Place. You can read more about the distinction
+          <a href='%{base_url}/t/app-type' target='_blank'>here<a/>. If your app is general, click the 'Next' button.
+          If your app is for a place, select the place on the list below.
+
+        category_id:
+          label: "Place"
+      submit:
+        title: "Submit"
+        description: |
+          When you submit this form a petition to create this app will be created.
+          The petition needs at least 30 people to support it.
+          <br>
+          <img class='large' src='%{base_url}/plugins/civically-place/images/ballot_box.svg'>
+          <br>
+          Read <a href='/faq#creating_a_app' target='_blank'>Creating an App</a> to learn more.
+    error:
+      failed_to_create_petition_topic: "Failed to create petition topic: %{errors}"
