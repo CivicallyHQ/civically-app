@@ -63,3 +63,28 @@ en:
           Read <a href='/faq#creating_a_app' target='_blank'>Creating an App</a> to learn more.
     error:
       failed_to_create_petition_topic: "Failed to create petition topic: %{errors}"
+
+  about_apps:
+    title: "About Apps"
+    body: |
+      ** Apps and the App Store are planned features. They are not currently live. [Join in the discussion about this plan here](/t/apps-and-app-store).**
+
+      Apps provide civic services, help with civic issues or add to civic life in a place. The Civically app store is the civic version of the app store on your mobile phone. All apps must be open source and be hosted on either GitHub or BitBucket.
+
+      The process for adding an app to Civically is as follows:
+
+      1. Complete the app petition wizard.
+
+       a. Repository Url: Enter the url to your open source repository on either GitHub or BitBucket. Do not add a .git extension. The url will be used as link to your repository.
+
+       b. Add a name for your app and a description of what it does. The name will be used as the title of your app petition and the description will be the first post in the petition topic.
+
+       c. Add a place. If the app is specific to a place, e.g. it allows people to get alerts about planning applications in the City of Perth, then add that place here. If it is not specific to a place, click next.
+
+      2. Gather support for your app petition. Each app petition needs at least 50 votes before it will be considered for addition to Civically.
+
+      3. The app is added to staging.civically.io to test that the functionality works as described. All apps must be approved by a Civically tester whilst on staging. All apps must stay on staging for a minimum of 1 week.
+
+      4. When an app passes staging it is subject to a final approval by a place or site moderator.
+
+      5. If the app receives final approval, it is made available on the Civically app store and the app petition topic is converted into a review topic for the app.
