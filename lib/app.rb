@@ -3,14 +3,40 @@ class CivicallyApp::App
     method = "#{side}_apps"
     user_apps = user.public_send(method) if user.respond_to? method
 
-    if user_apps.find { |a| a['id'] == app }
+    if user_apps.include?(app)
       return { reject: true, reason: "App already added" }
     end
 
     user.custom_fields["#{side}_apps"] = JSON.generate(user_apps.push(app))
-    user.save!
+    if result = user.save_custom_fields(true)
+      return { success: 'OK' }
+    else
+      return { reject: true, reason: "Failed to add app" }
+    end
+  end
 
-    return { success: 'OK' }
+  def self.remove_app(user, app, side)
+    method = "#{side}_apps"
+    user_apps = user.public_send(method) if user.respond_to? method
+
+    user.custom_fields[method] = JSON.generate(user_apps.reject { |a| a === app })
+
+    if result = user.save_custom_fields(true)
+      return { success: 'OK' }
+    else
+      return { reject: true, reason: "Failed to remove app" }
+    end
+  end
+
+  def self.change_side(user, app, side)
+    opposite_side = side === 'right' ? 'left' : 'right'
+    result = remove_app(user, app, opposite_side)
+
+    if result[:success]
+      result = add_app(user, app, side)
+    end
+
+    result
   end
 
   def self.all_plugins

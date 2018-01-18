@@ -6,6 +6,10 @@ en:
       side:
         left: "Left"
         right: "Right"
+        change:
+          btn: "Change Widget Side"
+          title: "Change Widget Side"
+          body: "Select a side for the {{appTitle}} widget."
       petition:
         title: "Submit App"
       add:

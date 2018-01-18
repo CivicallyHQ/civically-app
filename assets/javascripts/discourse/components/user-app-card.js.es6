@@ -11,6 +11,10 @@ export default Ember.Component.extend({
   actions: {
     removeApp() {
       this.sendAction('removeApp', this.get('app'));
+    },
+
+    changeSide() {
+      this.sendAction('changeSide', this.get('app'));
     }
   }
 });

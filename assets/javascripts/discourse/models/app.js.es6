@@ -15,6 +15,12 @@ App.reopenClass({
     });
   },
 
+  changeSide(app, side) {
+    return ajax('/app/change_side', { type: 'POST', data: { app, side }}).then(function(result) {
+      return result;
+    });
+  },
+
   save(data) {
     return ajax('/app/save', { type: 'POST', data }).then(function(result) {
       return result;

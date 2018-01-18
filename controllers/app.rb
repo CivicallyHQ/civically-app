@@ -30,14 +30,9 @@ class CivicallyApp::AppController < ::ApplicationController
     params.require(:app)
     params.require(:side)
 
-    user = current_user
-    method = "#{params[:side]}_apps"
-    user_app_names = user.public_send(method) if user.respond_to? method
+    result = CivicallyApp::App.remove_app(current_user, params[:app], params[:side])
 
-    user.custom_fields[method] = JSON.generate(user_app_names.reject { |a| a === params[:app] })
-    user.save!
-
-    render json: success_json
+    render json: result
   end
 
   def save
@@ -51,9 +46,18 @@ class CivicallyApp::AppController < ::ApplicationController
       user.custom_fields['right_apps'] = JSON.generate(params[:right_apps])
     end
 
-    user.save!
+    user.save_custom_fields(true)
 
     render json: success_json
+  end
+
+  def change_side
+    params.require(:app)
+    params.require(:side)
+
+    result = CivicallyApp::App.change_side(current_user, params[:app], params[:side])
+
+    render json: result
   end
 
   def details

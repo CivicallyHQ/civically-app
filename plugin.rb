@@ -8,43 +8,48 @@ register_asset 'stylesheets/civically-app.scss'
 
 DiscourseEvent.on(:civically_site_ready) do
   unless SiteSetting.app_petition_category_id.to_i > 1
-    category = Category.create(user: Discourse.system_user,
-                               name: 'App',
-                               color: SecureRandom.hex(3),
-                               permissions: { everyone: 2 },
-                               allow_badges: true,
-                               text_color: 'FFFFF',
-                               topic_id: -1,
-                               topic_featured_link_allowed: true,
-                               parent_category_id: SiteSetting.petition_category_id,
-                               custom_fields: {
-                                 'meta': true,
-                                 'enable_topic_voting': "true",
-                                 'petition_enabled': true,
-                                 'petition_vote_threshold': 100,
-                                 'tl0_vote_limit': 1,
-                                 'tl1_vote_limit': 1,
-                                 'tl2_vote_limit': 1,
-                                 'tl3_vote_limit': 1,
-                                 'tl4_vote_limit': 1
-                               })
+    category = Category.create(
+      user: Discourse.system_user,
+      name: 'App',
+      color: SecureRandom.hex(3),
+      permissions: { everyone: 2 },
+      allow_badges: true,
+      text_color: 'FFFFF',
+      topic_id: -1,
+      topic_featured_link_allowed: true,
+      parent_category_id: SiteSetting.petition_category_id,
+      custom_fields: {
+        'meta': true,
+        'enable_topic_voting': "true",
+        'petition_enabled': true,
+        'petition_vote_threshold': 100,
+        'tl0_vote_limit': 1,
+        'tl1_vote_limit': 1,
+        'tl2_vote_limit': 1,
+        'tl3_vote_limit': 1,
+        'tl4_vote_limit': 1
+      }
+    )
+
     SiteSetting.app_petition_category_id = category.id
   end
 
   unless SiteSetting.app_category_id.to_i > 1
-    category = Category.create(user: Discourse.system_user,
-                               name: 'Apps',
-                               color: SecureRandom.hex(3),
-                               permissions: { everyone: 2 },
-                               allow_badges: true,
-                               text_color: 'FFFFF',
-                               topic_id: -1,
-                               topic_featured_link_allowed: true,
-                               custom_fields: {
-                                 'meta': true,
-                                 'rating_enabled': true,
-                                 'topic_types': 'rating'
-                               })
+    category = Category.create(
+      user: Discourse.system_user,
+      name: 'Apps',
+      color: SecureRandom.hex(3),
+      permissions: { everyone: 2 },
+      allow_badges: true,
+      text_color: 'FFFFF',
+      topic_id: -1,
+      topic_featured_link_allowed: true,
+      custom_fields: {
+        'meta': true,
+        'rating_enabled': true,
+        'topic_types': 'rating'
+      }
+    )
 
     if category.save
       SiteSetting.app_category_id = category.id
@@ -206,6 +211,7 @@ after_initialize do
     post "create" => "app#create"
     post "add" => "app#add"
     post "remove" => "app#remove"
+    post "change_side" => "app#change_side"
     post "save" => "app#save"
   end
 

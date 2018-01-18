@@ -4,7 +4,7 @@ import DiscourseURL from 'discourse/lib/url';
 export default Ember.Controller.extend({
   actions: {
     removeApp(app) {
-      let controller = showModal('remove-app', { model: app });
+      const controller = showModal('remove-app', { model: app });
 
       controller.addObserver('removed', () => {
         if (controller.get('removed')) {
@@ -15,6 +15,11 @@ export default Ember.Controller.extend({
         }
         controller.send('closeModal');
       });
+    },
+
+    changeSide(app) {
+      const controller = showModal('change-app-side', { model: app });
+      controller.setup();
     },
 
     goToStore() {

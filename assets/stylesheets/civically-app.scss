@@ -159,10 +159,6 @@
     display: flex;
     justify-content: space-between;
 
-    .p-link {
-      flex: 1;
-    }
-
     button {
       max-height: 32px;
     }
@@ -215,8 +211,10 @@
     }
   }
 
-  .app-side {
+  .app-gutter {
     margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
   }
 }
 
@@ -260,6 +258,14 @@
     .app-version {
       float: left;
       margin-left: 10px;
+    }
+  }
+
+  .app-controls {
+    margin: 10px 0;
+
+    button {
+      margin-right: 5px;
     }
   }
 }
@@ -342,7 +348,7 @@
   }
 }
 
-.add-app-body {
+.toggle-app-side-body {
   display: block;
   width: 100%;
   margin-bottom: 15px;

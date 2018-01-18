@@ -1,6 +1,6 @@
 <div class="user-apps">
   {{#each apps as |a|}}
-    {{user-app-card app=a removeApp='removeApp'}}
+    {{user-app-card app=a removeApp='removeApp' changeSide='changeSide'}}
   {{/each}}
 </div>
 {{d-button label='app.store.link' action='goToStore' icon='plus' class='btn btn-primary'}}
