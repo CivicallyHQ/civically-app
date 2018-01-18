@@ -196,7 +196,7 @@
 
     .app-version {
       font-size: 0.9em;
-      float: right;
+      float: left;
     }
 
     .app-authors {
@@ -206,15 +206,9 @@
     }
 
     .app-rating {
-      float: left;
+      float: right;
       cursor: pointer;
     }
-  }
-
-  .app-gutter {
-    margin-top: 5px;
-    display: flex;
-    justify-content: space-between;
   }
 }
 
