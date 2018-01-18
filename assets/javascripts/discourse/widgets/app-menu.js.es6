@@ -52,15 +52,7 @@ createWidget('app-menu-list', {
   tagName: 'ul.app-menu-list',
 
   html(attrs) {
-    const category = attrs.category;
-
-    let contents = [
-      h('li', this.attach('link', {
-        href: category.get('url'),
-        icon: 'home',
-        rawLabel: I18n.t(`${appKey(attrs.id)}.title`)
-      }))
-    ];
+    let contents = [];
 
     if (attrs.isUser) {
       contents.push([
