@@ -196,18 +196,22 @@
 
     .app-version {
       font-size: 0.9em;
+      margin-right: 10px;
       float: left;
     }
 
     .app-authors {
       font-size: 0.9em;
       float: left;
-      margin-right: 10px;
     }
 
     .app-rating {
       float: right;
       cursor: pointer;
+    }
+
+    .app-side {
+      float: right;
     }
   }
 }
