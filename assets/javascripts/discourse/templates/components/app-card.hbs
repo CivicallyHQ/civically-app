@@ -1,11 +1,11 @@
 <div class="app-contents">
   <div class="app-title">
-    {{#if showAddApp}}
-      {{d-button class=btnClasses action='addApp' label=btnLabel disabled=app.user_added}}
-    {{/if}}
     <div class="p-text medium">
       {{app-title app}}
     </div>
+    {{#if showAddApp}}
+      {{d-button class=btnClasses action='addApp' label=btnLabel disabled=app.user_added}}
+    {{/if}}
   </div>
   <div class="app-image">{{icon-or-image app.image_url}}</div>
   <div class="app-about">{{app-about app}}</div>

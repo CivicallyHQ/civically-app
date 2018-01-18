@@ -156,14 +156,15 @@
 
   .app-title {
     margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
 
     .p-link {
-      float: left;
-      overflow: hidden;
+      flex: 1;
     }
 
     button {
-      float: right;
+      max-height: 32px;
     }
   }
 

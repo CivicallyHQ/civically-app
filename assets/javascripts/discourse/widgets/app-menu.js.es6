@@ -1,5 +1,4 @@
 import { createWidget } from 'discourse/widgets/widget';
-import { appKey } from '../lib/app-utilities';
 import { h } from 'virtual-dom';
 
 export default createWidget('app-menu', {

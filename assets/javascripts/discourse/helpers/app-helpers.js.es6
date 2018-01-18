@@ -3,7 +3,7 @@ import { appKey } from '../lib/app-utilities';
 
 registerUnbound('app-title', function(app) {
   let title = I18n.t(`${appKey(app.id)}.title`);
-  let html = `<a href='/app/details/${app.id}' class='p-text p-link'>${title}</a>`;
+  let html = `<a href='/app/details/${app.id}' class='p-text p-link' target='_blank'>${title}</a>`;
   return new Handlebars.SafeString(html);
 });
 

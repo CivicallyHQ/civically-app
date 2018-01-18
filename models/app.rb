@@ -38,9 +38,9 @@ class CivicallyApp::App
     @url = metadata.url
     @image_url = metadata.image_url if metadata.respond_to?(:image_url)
 
-    id_arr = @id.split('_')
-    if id_arr[1]
-      slug = id_arr[1].split('-')[1]
+    name_arr = metadata.name.split('_')
+    if name_arr[1]
+      slug = name_arr[1].split('-')[1]
       category = Category.find_by(slug: slug)
       @place_category_id = category.id
     end
