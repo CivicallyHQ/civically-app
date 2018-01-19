@@ -46,7 +46,7 @@ en:
         intro: "This is a petition for an app."
         resolution:
           accepted: "This petition for an app has been accepted. <a href='{{link}}' class='p-text p-link'>Check out the app on the store</a>."
-          rejected: "This petition for an app has been rejected. <a href='/faq#submitting-an-app' target='_blank'>Learn more about submitting a new app</a>."
+          rejected: "This petition for an app has been rejected. <a href='/t/apps-and-app-store' target='_blank'>Learn more about submitting a new app</a>."
 
   wizard_js:
     app:

@@ -314,15 +314,20 @@
   right: 0;
   top: 15px;
   background-color: white;
-  padding: 6px 8px;
+  padding: 5px;
   list-style: none;
-  border: 1px solid #eee;
+  border: 1px solid $primary-low;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
   width: 180px;
   z-index: 2;
 
   li {
-    display: inline-block;
-    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $tertiary-low;
+    }
 
     i {
       font-size: 1em;

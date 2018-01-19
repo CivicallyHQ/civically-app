@@ -16,7 +16,7 @@ en:
           <br>
           <img class='large' src='%{base_url}/plugins/civically-place/images/woman_computer.svg'>
           <br>
-          Please read <a href='/faq#app_submission'>Adding an App</a> before you start.
+          Please read <a href='/t/apps-and-app-store'>Adding an App</a> before you start.
 
       repository:
         title: "Repository"
@@ -60,7 +60,7 @@ en:
           <br>
           <img class='large' src='%{base_url}/plugins/civically-place/images/ballot_box.svg'>
           <br>
-          Read <a href='/faq#creating_a_app' target='_blank'>Creating an App</a> to learn more.
+          Read <a href='/t/apps-and-app-store' target='_blank'>Creating an App</a> to learn more.
     error:
       failed_to_create_petition_topic: "Failed to create petition topic: %{errors}"
 
