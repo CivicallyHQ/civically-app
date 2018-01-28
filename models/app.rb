@@ -6,6 +6,7 @@ class CivicallyApp::App
                 :side,
                 :version,
                 :authors,
+                :default,
                 :url,
                 :image_url,
                 :user_added,
@@ -33,6 +34,7 @@ class CivicallyApp::App
       end
     end
 
+    @default = metadata.default || false
     @version = metadata.version
     @authors = metadata.authors
     @url = metadata.url

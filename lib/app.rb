@@ -47,6 +47,10 @@ class CivicallyApp::App
     all_plugins.select { |p| p.metadata.app }.map { |p| CivicallyApp::App.new(p, user) }
   end
 
+  def self.default_apps(user)
+    all_apps(user).select { |a| a.default }
+  end
+
   def self.general_apps(user)
     all_apps(user).select { |a| !a.place_category_id }
   end

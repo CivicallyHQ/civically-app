@@ -185,10 +185,10 @@ after_initialize do
   add_to_serializer(:current_user, :right_apps) { object.right_apps }
 
   class Plugin::Metadata
-    attr_accessor :id, :image_url, :title, :app
+    attr_accessor :id, :image_url, :title, :app, :default
     core_fields = FIELDS
     remove_const(:FIELDS)
-    FIELDS = core_fields + [:id, :image_url, :title, :app]
+    FIELDS = core_fields + [:id, :image_url, :title, :app, :default]
   end
 
   require_dependency "application_controller"
@@ -246,17 +246,6 @@ after_initialize do
         JSON.parse(self.custom_fields["right_apps"])
       else
         []
-      end
-    end
-  end
-
-  DEFAULT_APPS = []
-
-  DiscourseEvent.on(:user_created) do |user|
-    user = User.find(user.id)
-    if DEFAULT_APPS.length > 0
-      DEFAULT_APPS.each do |app|
-        CivicallyApp::App.add_app(user, app[:id], app[:side])
       end
     end
   end
