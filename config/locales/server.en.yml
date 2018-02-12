@@ -58,7 +58,7 @@ en:
           When you submit this form a petition to create this app will be created.
           The petition needs at least 30 people to support it.
           <br>
-          <img class='large' src='%{base_url}/plugins/civically-place/images/ballot_box.svg'>
+          <img class='large' src='%{base_url}/plugins/civically-place/images/ballot_box.png'>
           <br>
           Read <a href='/t/apps-and-app-store' target='_blank'>Creating an App</a> to learn more.
     error:
