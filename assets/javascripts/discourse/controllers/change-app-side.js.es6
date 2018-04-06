@@ -35,17 +35,17 @@ export default Ember.Controller.extend({
 
       if (changeDisabled) return;
 
-      const appId = this.get('model.id');
+      const appName = this.get('model.name');
       const user = this.get('currentUser');
       const addSide = this.get('side');
       const removeSide = this.get('model.side');
 
-      App.changeSide(appId, addSide).then(() => {
+      App.changeSide(appName, addSide).then(() => {
         const removeSideApps = user.get(`${removeSide}_apps`);
-        removeSideApps.splice(removeSideApps.indexOf(appId), 1);
+        removeSideApps.splice(removeSideApps.indexOf(appName), 1);
 
         const addSideApps = user.get(`${addSide}_apps`);
-        addSideApps.push(appId);
+        addSideApps.push(appName);
         user.set(`${addSide}_apps`, addSideApps);
 
         this.set('model.side', addSide);

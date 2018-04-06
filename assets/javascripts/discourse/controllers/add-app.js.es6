@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
     },
 
     addApp() {
-      App.add(this.get('model.id'), this.get('side')).then(() => {
+      App.add(this.get('model.name'), this.get('side')).then(() => {
         this.set('added', true);
       });
     },

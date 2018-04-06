@@ -4,7 +4,8 @@
 # authors: angus
 # url: https://github.com/civicallyhq/civically-app
 
-register_asset 'stylesheets/civically-app.scss'
+register_asset 'stylesheets/common/civically-app.scss'
+register_asset 'stylesheets/common/civically-app-widget.scss'
 
 DiscourseEvent.on(:civically_site_ready) do
   unless SiteSetting.app_petition_category_id.to_i > 1
@@ -181,14 +182,13 @@ DiscourseEvent.on(:petition_ready) do
 end
 
 after_initialize do
-  add_to_serializer(:current_user, :left_apps) { object.left_apps }
-  add_to_serializer(:current_user, :right_apps) { object.right_apps }
+  add_to_serializer(:current_user, :apps) { object.apps }
 
   class Plugin::Metadata
-    attr_accessor :id, :image_url, :title, :app, :default
+    attr_accessor :name, :image_url, :title, :app, :default
     core_fields = FIELDS
     remove_const(:FIELDS)
-    FIELDS = core_fields + [:id, :image_url, :title, :app, :default]
+    FIELDS = core_fields + [:name, :image_url, :title, :app, :default]
   end
 
   require_dependency "application_controller"
@@ -205,7 +205,7 @@ after_initialize do
     get "store/general" => "app#general"
     get "store/place" => "app#place"
     get "user" => "app#user"
-    get "details/:id" => "app#details"
+    get "details/:name" => "app#details"
     get "submit" => "app#index"
     get "validate_repository" => "app#validate_repository"
     post "create" => "app#create"
@@ -228,24 +228,20 @@ after_initialize do
   load File.expand_path('../lib/app.rb', __FILE__)
 
   class Plugin::Instance
-    attr_accessor :user_added
+    attr_accessor :added
   end
 
   require_dependency 'user'
   class ::User
-    def left_apps
-      if self.custom_fields["left_apps"]
-        JSON.parse(self.custom_fields["left_apps"])
-      else
-        []
-      end
-    end
+    def apps
+      @apps ||= begin
+        all_apps = CivicallyApp::App.all_apps
 
-    def right_apps
-      if self.custom_fields["right_apps"]
-        JSON.parse(self.custom_fields["right_apps"])
-      else
-        []
+        custom_fields.select do |k, v|
+          all_apps.map(&:name).include?(k)
+        end.map do |k, v|
+          [k, JSON.parse(v)]
+        end.to_h
       end
     end
   end

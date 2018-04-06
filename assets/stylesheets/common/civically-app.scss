@@ -1,0 +1,268 @@
+.sidebar-container.editing .app {
+  border: 1px solid $tertiary;
+}
+
+.toggle-app-side-body {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.toggle-app-side {
+  border: 1px solid $tertiary;
+  float: left;
+  cursor: pointer;
+
+  label {
+    float: left;
+    padding: 6px 10px;
+    margin-bottom: 0;
+    cursor: pointer;
+    width: 40px;
+    text-align: center;
+
+    &.enabled {
+      background-color: $tertiary;
+      color: $secondary;
+    }
+  }
+}
+
+.topic-label {
+  display: inline-block;
+  padding: 6px 12px;
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 18px;
+  background: #e9e9e9;
+
+  .fa {
+    margin-right: 7px;
+  }
+}
+
+.app-edit {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 20px;
+
+  &.left {
+    left: -30px;
+  }
+
+  &.right {
+    right: -30px;
+  }
+
+  .action {
+    width: 20px;
+    height: 20px;
+    line-height: 10px;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .app-pinned {
+    cursor: initial;
+  }
+}
+
+.app-store {
+  padding-bottom: 30px;
+
+  .p-text.large, .p-text.medium {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+
+  .submit {
+    margin-top: 20px;
+  }
+
+  .store-apps {
+    padding: 30px 0;
+    width: 100%;
+    position: relative;
+    overflow: auto;
+
+    &.inline {
+      white-space: nowrap;
+      display: inline-block;
+
+      .app-card {
+         margin: 0 20px;
+      }
+    }
+
+    > div.app-card {
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.app-details {
+  text-align: center;
+}
+
+.app-card {
+  padding: 15px;
+  width: 250px;
+  height: 250px;
+  border: 1px solid $tertiary;
+  background-color: $secondary;
+  margin: 20px 40px 20px 0;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  text-align: left;
+  white-space: normal;
+
+  .app-title {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      max-height: 32px;
+    }
+  }
+
+  .app-contents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .app-title, .app-image, .app-about {
+      margin-bottom: 10px;
+    }
+  }
+
+  .app-image {
+    width: 150px;
+    flex: 0 1 100px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .app-about {
+    line-height: 1.5em;
+  }
+
+  .app-gutter {
+    margin-top: 5px;
+
+    .app-version {
+      font-size: 0.9em;
+      margin-right: 10px;
+      float: left;
+    }
+
+    .app-authors {
+      font-size: 0.9em;
+      float: left;
+    }
+
+    .app-rating {
+      float: right;
+      cursor: pointer;
+    }
+
+    .app-side {
+      float: right;
+    }
+  }
+}
+
+.app-details .app-card {
+  margin: 10px auto;
+  width: 80%;
+  height: 80%;
+  max-width: 500px;
+  display: block;
+
+  .app-image {
+    width: 300px;
+    height: 300px;
+    flex: 0 1 auto;
+  }
+}
+
+.user.app-card {
+  width: 250px;
+  height: auto;
+  margin-top: 0;
+
+  .app-title {
+    margin-bottom: 0;
+
+    span {
+      float: left;
+    }
+
+    a {
+      font-size: 16px;
+      line-height: 18px;
+    }
+
+    .app-remove {
+      font-size: 1em;
+      color: $primary;
+      float: right;
+    }
+
+    .app-version {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+
+  .app-controls {
+    margin: 10px 0;
+
+    button {
+      margin-right: 5px;
+    }
+  }
+}
+
+.user-apps > div:first-of-type {
+  margin-left: 0;
+}
+
+.user-apps > div:last-of-type {
+  margin-right: 0;
+}
+
+.user-apps-link {
+  display: inline-block;
+}
+
+.store-link {
+  cursor: pointer;
+  text-align: center;
+}
+
+// classes used in other plugins
+
+.p-link {
+  background-image: linear-gradient(180deg,transparent 90%, $tertiary 0);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  color: $primary;
+}

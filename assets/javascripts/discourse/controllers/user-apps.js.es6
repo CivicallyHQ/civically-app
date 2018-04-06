@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
       controller.addObserver('removed', () => {
         if (controller.get('removed')) {
           let apps = this.get('apps');
-          let newApps = apps.filter((a) => a.id !== app.id);
+          let newApps = apps.filter((a) => a.name !== app.name);
           this.set('apps', newApps);
           controller.set('removed', null);
         }

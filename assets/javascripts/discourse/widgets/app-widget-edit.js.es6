@@ -1,22 +1,22 @@
 import { createWidget } from 'discourse/widgets/widget';
 
-export default createWidget('app-edit', {
-  tagName: 'div.app-edit',
+export default createWidget('app-widget-edit', {
+  tagName: 'div.app-widget-edit',
 
   buildClasses(attrs) {
     return attrs.side;
   },
 
   html(attrs) {
-    const userApps = this.currentUser.get(`${attrs.side}_apps`);
+    const userApps = this.currentUser.get('apps');
     let html = [];
 
-    if (attrs.pinned) return;
+    if (attrs.pinned || !userApps) return;
 
     if (userApps.length > 1) {
       if (attrs.index !== 0) {
         html.push(this.attach('button', {
-          className: 'btn btn-primary action app-move-up',
+          className: 'btn btn-primary action app-widget-up',
           icon: 'arrow-up',
           action: 'moveUp'
         }));
@@ -24,7 +24,7 @@ export default createWidget('app-edit', {
 
       if (attrs.index !== userApps.length - 1) {
         html.push(this.attach('button', {
-          className: 'btn btn-primary action app-move-down',
+          className: 'btn btn-primary action app-widget-down',
           icon: 'arrow-down',
           action: 'moveDown'
         }));
@@ -33,9 +33,9 @@ export default createWidget('app-edit', {
 
     if (!attrs.noRemove) {
       html.push(this.attach('button', {
-        className: 'btn btn-primary action app-remove',
+        className: 'btn btn-primary action app-widget-remove',
         icon: 'times',
-        action: 'removeApp',
+        action: 'removeAppWidget',
       }));
     }
 
@@ -46,7 +46,7 @@ export default createWidget('app-edit', {
     return null;
   },
 
-  moveApp(up) {
+  moveAppWiget(up) {
     const user = this.currentUser;
     const side = this.attrs.side;
     const currentIndex = this.attrs.index;
@@ -63,10 +63,10 @@ export default createWidget('app-edit', {
   },
 
   moveUp() {
-    this.moveApp(true);
+    this.moveAppWidget(true);
   },
 
   moveDown() {
-    this.moveApp(false);
+    this.moveAppWidget(false);
   }
 });

@@ -1,5 +1,5 @@
-const appKey = function(appId) {
-  return appId.replace(/-/g, '_');
+const appProps = function(appName) {
+  return I18n.t(`app.${appName.underscore()}`);
 };
 
-export { appKey };
+export { appProps };

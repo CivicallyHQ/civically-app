@@ -5,14 +5,14 @@ export default Ember.Component.extend({
   classNames: ['app-card'],
   showAddApp: Ember.computed.alias('currentUser'),
 
-  @computed('app.user_added')
+  @computed('app.added')
   btnClasses(added) {
     let classes = 'btn';
     if (!added) classes += ' btn-primary';
     return classes;
   },
 
-  @computed('app.user_added')
+  @computed('app.added')
   btnLabel(added) {
     return added ? 'app.added.btn' : 'app.add.btn';
   },
@@ -24,22 +24,21 @@ export default Ember.Component.extend({
 
   actions: {
     addApp() {
-      let controller = showModal('add-app', {model: {
-        id: this.get('app.id'),
-        title: this.get('app.title')
-      }});
+      const name = this.get('app.name');
+      let controller = showModal('add-app', { model: { name }});
 
       controller.addObserver('added', () => {
         if (controller.get('added')) {
-          this.set('app.user_added', true);
+          this.set('app.added', true);
 
           const user = this.get('currentUser');
           const side = controller.get('side');
-          const appId = this.get('app.id');
+          const appName = this.get('app.name');
 
-          let userApps = user.get(`${side}_apps`);
-          userApps.push(appId);
-          user.set(`${side}_apps`, userApps);
+          let apps = user.get('apps');
+          apps.push(appName);
+          user.set('apps', apps);
+          user.set(`${appName}`, { side });
 
           controller.set('added', null);
           controller.send('closeModal');

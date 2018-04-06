@@ -2,7 +2,7 @@ import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 
 export default createWidget('app', {
-  tagName: 'li.app-link',
+  tagName: 'li.app-widget-link',
 
   html(attrs) {
     return [

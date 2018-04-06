@@ -10,13 +10,13 @@ export default Ember.Controller.extend({
     },
 
     removeApp() {
-      const id = this.get('model.id');
+      const name = this.get('model.name');
       const side = this.get('model.side');
       const user = this.get('currentUser');
 
-      App.remove(id, side).then(() => {
+      App.remove(name, side).then(() => {
         let apps = user.get(`${side}_apps`);
-        apps.splice(apps.indexOf(id), 1);
+        apps.splice(apps.indexOf(name), 1);
 
         user.set(`${side}_apps`, apps);
         this.set('removed', true);

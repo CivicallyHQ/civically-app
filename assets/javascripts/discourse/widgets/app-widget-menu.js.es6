@@ -2,9 +2,9 @@ import { createWidget } from 'discourse/widgets/widget';
 import DiscourseURL from 'discourse/lib/url';
 import { h } from 'virtual-dom';
 
-export default createWidget('app-menu', {
-  tagName: 'div.app-menu',
-  buildKey: () => 'app_menu',
+export default createWidget('app-widget-menu', {
+  tagName: 'div.app-widget-menu',
+  buildKey: () => 'app_widget_menu',
 
   defaultState() {
     return {
@@ -17,15 +17,14 @@ export default createWidget('app-menu', {
       this.attach('link', {
         icon: 'ellipsis-v',
         action: 'showMenu',
-        className: 'app-menu-toggle'
+        className: 'app-widget-menu-toggle'
       })
     ];
 
     if (state.showMenu) {
-      contents.push(this.attach('app-menu-list', {
+      contents.push(this.attach('app-widget-menu-list', {
         category: attrs.category,
-        id: attrs.id,
-        title: I18n.t(attrs.title),
+        appName: attrs.appName,
         isUser: attrs.isUser
       }));
     }
@@ -47,7 +46,7 @@ export default createWidget('app-menu', {
   }
 });
 
-createWidget('app-menu-item', {
+createWidget('app-widget-menu-item', {
   html(attrs) {
     return [
       h(`i.fa.fa-${attrs.icon}`),
@@ -67,20 +66,20 @@ createWidget('app-menu-item', {
   }
 });
 
-createWidget('app-menu-list', {
-  tagName: 'ul.app-menu-list',
+createWidget('app-widget-menu-list', {
+  tagName: 'ul.app-widget-menu-list',
 
   html(attrs) {
     let contents = [];
 
     if (attrs.isUser) {
       contents.push([
-        h('li', this.attach('app-menu-item', {
-          href: `/app/details/${attrs.id}`,
+        h('li', this.attach('app-widget-menu-item', {
+          href: `/app/details/${attrs.appName}`,
           label: 'app.store.page',
           icon: 'info'
         })),
-        h('li', this.attach('app-menu-item', {
+        h('li', this.attach('app-widget-menu-item', {
           action: 'removeApp',
           label: 'app.remove.title',
           icon: 'times'

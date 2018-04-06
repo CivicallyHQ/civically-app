@@ -13,3 +13,5 @@ plugins:
   app_store_redirect_url:
     default: '/'
     client: true
+  app_default:
+    default: 'civically-navigation|civically-place|civically-user|civically-site'

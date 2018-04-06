@@ -1,11 +1,10 @@
 class CivicallyApp::AppSerializer < ApplicationSerializer
-  attributes :id,
-             :name,
+  attributes :name,
              :version,
              :url,
              :image_url,
              :authors,
-             :user_added,
+             :added,
              :side,
              :place_category_id,
              :rating_topic
