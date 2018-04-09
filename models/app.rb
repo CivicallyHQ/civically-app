@@ -2,25 +2,28 @@ class CivicallyApp::App
   include ActiveModel::SerializerSupport
 
   attr_accessor :name,
+                :type,
                 :version,
                 :authors,
-                :default,
                 :url,
                 :image_url,
                 :place_category_id,
-                :rating_topic
+                :rating_topic,
+                :widget
 
   def initialize(plugin)
-    metadata = plugin.metadata
-    @name = metadata.name
-    @default = SiteSetting.app_default.include? metadata.app
-    @version = metadata.version
-    @authors = metadata.authors
-    @url = metadata.url
-    @image_url = metadata.image_url if metadata.respond_to?(:image_url)
+    @metadata = plugin.metadata
+    @name = plugin.metadata.name
+    @type = plugin.metadata.app
+    @version = plugin.metadata.version
+    @authors = plugin.metadata.authors
+    @url = plugin.metadata.url
+  end
 
-    name_arr = metadata.name.split('_')
+  def place_category_id
+    name_arr = @metadata.name.split('_')
     place = name_arr[1]
+
     if place
       slug_arr = place.split('-')
 
@@ -28,14 +31,32 @@ class CivicallyApp::App
       town_slug = slug_arr.last
 
       if category = Category.find_by_slug(town_slug, country_slug)
-        @place_category_id = category.id
+        category.id
       end
     end
+  end
 
-    if rating_topic = Topic.where("id in (
+  def image_url
+    if @metadata.respond_to?(:image_url)
+      @metadata.image_url
+    else
+      SiteSetting.default_app_image_url
+    end
+  end
+
+  def rating_topic
+    Topic.where("id in (
       SELECT topic_id FROM topic_custom_fields WHERE name = 'rating_target_id' AND value = ?
     )", @name)[0]
-      @rating_topic = rating_topic
+  end
+
+  def widget
+    widget = {}
+
+    if @name === 'civically-navigation'
+      widget[:no_header] = true
     end
+
+    widget
   end
 end

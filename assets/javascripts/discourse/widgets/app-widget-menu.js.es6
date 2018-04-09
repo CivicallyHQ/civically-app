@@ -13,6 +13,8 @@ export default createWidget('app-widget-menu', {
   },
 
   html(attrs, state) {
+    const { category, app } = attrs;
+
     let contents = [
       this.attach('link', {
         icon: 'ellipsis-v',
@@ -23,9 +25,8 @@ export default createWidget('app-widget-menu', {
 
     if (state.showMenu) {
       contents.push(this.attach('app-widget-menu-list', {
-        category: attrs.category,
-        appName: attrs.appName,
-        isUser: attrs.isUser
+        category,
+        app
       }));
     }
 
@@ -70,21 +71,29 @@ createWidget('app-widget-menu-list', {
   tagName: 'ul.app-widget-menu-list',
 
   html(attrs) {
+    const { category, app } = attrs;
+    const isSystem = app.type === 'system';
     let contents = [];
+    let aboutLink = isSystem ?
+                    `/t/${app.name.dasherize()}` :
+                    `/app/details/${app.name}`;
 
-    if (attrs.isUser) {
-      contents.push([
-        h('li', this.attach('app-widget-menu-item', {
-          href: `/app/details/${attrs.appName}`,
-          label: 'app.store.page',
-          icon: 'info'
-        })),
+    contents.push(
+      h('li', this.attach('app-widget-menu-item', {
+        href: aboutLink,
+        label: 'app.about',
+        icon: 'info'
+      }))
+    );
+
+    if (!isSystem) {
+      contents.push(
         h('li', this.attach('app-widget-menu-item', {
           action: 'removeApp',
           label: 'app.remove.title',
           icon: 'times'
         }))
-      ]);
+      )
     }
 
     return contents;

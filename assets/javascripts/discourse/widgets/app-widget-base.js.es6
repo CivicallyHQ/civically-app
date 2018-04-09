@@ -1,5 +1,4 @@
 import showModal from 'discourse/lib/show-modal';
-import { appProps } from '../lib/app-utilities';
 import { h } from 'virtual-dom';
 
 export default function(appName) {
@@ -9,55 +8,65 @@ export default function(appName) {
 
     defaultState() {
       const user = this.currentUser;
-      const userApp = user.get(`apps_user.${appName}`);
-      const locked = !userApp || !userApp.widget_enabled;
+      const dasherizedAppName = appName.dasherize();
+      const userApps = user.get('apps');
+      const userApp = userApps[dasherizedAppName];
+      const apps = this.site.get('apps');
+      const app = apps.find(a => a.name === dasherizedAppName);
+      const locked = !userApp || !userApp.enabled;
 
       return {
         locked,
-        mouseover: false
+        mouseover: false,
+        userApp,
+        app
       };
     },
 
     buildClasses() {
-      let classes = `${appName.dasherize()} app-widget `;
-      if (this.state.locked) {
+      const app = this.state.app;
+      const locked = this.state.locked;
+
+      let classes = `${app.name} app-widget `;
+
+      if (locked) {
         classes += 'locked ';
       }
+
       return classes;
     },
 
     html(attrs, state) {
-      const category = attrs.category;
-      const isUser = attrs.isUser;
-      const locked = state.locked;
+      const { category, editing, side } = attrs;
       const mouseover = state.mouseover;
-      const props = appProps(appName);
+      const locked = state.locked;
+      const app = state.app;
+      const userApp = state.userApp;
 
-      let contents = [this.attach('app-widget-header', {
-        category,
-        appName,
-        isUser,
-        locked
-      })];
+      let contents = [];
+
+      if (!app.widget.no_header || locked) {
+        contents.push(this.attach('app-widget-header', {
+          category,
+          userApp,
+          app
+        }));
+      }
 
       let content = [];
 
       if (locked && mouseover) {
-        content.push(props.locked);
+        content.push(I18n.t(`app.${app.name.underscore()}.locked`));
       } else if (!locked) {
-        content.push(this.content(attrs, state));
+        content.push(this.contents());
       }
 
       contents.push(h('div.app-widget-content', content));
 
       let html = [h('div.app-widget-container', contents)];
 
-      if (attrs.editing) {
-        html.push(this.attach('app-widget-edit', {
-          side: attrs.side,
-          index: attrs.index,
-          appName
-        }));
+      if (editing) {
+        html.push(this.attach('app-widget-edit', { app }));
       }
 
       return html;

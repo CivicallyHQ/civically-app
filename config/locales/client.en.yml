@@ -3,6 +3,7 @@ en:
     app:
       guest: "You need an account to use this feature"
       no_results: "No apps available"
+      about: "About"
       side:
         left: "Left"
         right: "Right"
@@ -31,7 +32,6 @@ en:
         label: "App Store"
         link: "Add Apps"
         general: "General"
-        page: "Store Page"
 
     topic:
       type:

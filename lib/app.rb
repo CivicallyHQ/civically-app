@@ -60,7 +60,7 @@ class CivicallyApp::App
       topic_custom_fields: {
         subtype: 'voting',
         petition: true,
-        petition_type: 'app',
+        petition_id: 'app',
         petition_status: 'open'
       }
     }

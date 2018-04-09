@@ -166,7 +166,7 @@ DiscourseEvent.on(:petition_ready) do
       end
 
       topic.custom_fields.delete('petition')
-      topic.custom_fields.delete('petition_type')
+      topic.custom_fields.delete('petition_id')
       topic.custom_fields.delete('petition_status')
       topic.subtype = 'rating'
     end
@@ -183,6 +183,16 @@ end
 
 after_initialize do
   add_to_serializer(:current_user, :apps) { object.apps }
+  add_to_serializer(:site, :apps) {
+    ActiveModel::ArraySerializer.new(CivicallyApp::App.all_apps, each_serializer: CivicallyApp::AppSerializer).as_json
+  }
+
+  class ::SiteSerializer
+    has_many
+    def site
+
+    end
+  end
 
   class Plugin::Metadata
     attr_accessor :name, :image_url, :title, :app, :default

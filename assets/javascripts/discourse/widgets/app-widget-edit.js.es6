@@ -1,5 +1,9 @@
 import { createWidget } from 'discourse/widgets/widget';
 
+var isNumeric = function(val) {
+  return !isNaN(parseFloat(val)) && isFinite(val);
+};
+
 export default createWidget('app-widget-edit', {
   tagName: 'div.app-widget-edit',
 
@@ -9,12 +13,14 @@ export default createWidget('app-widget-edit', {
 
   html(attrs) {
     const userApps = this.currentUser.get('apps');
+    const { app } = attrs;
+    const order = app.order;
     let html = [];
 
-    if (attrs.pinned || !userApps) return;
+    if (!isNumeric(order) || !userApps) return;
 
     if (userApps.length > 1) {
-      if (attrs.index !== 0) {
+      if (order !== 1) {
         html.push(this.attach('button', {
           className: 'btn btn-primary action app-widget-up',
           icon: 'arrow-up',
@@ -22,7 +28,7 @@ export default createWidget('app-widget-edit', {
         }));
       }
 
-      if (attrs.index !== userApps.length - 1) {
+      if (order !== userApps.length - 1) {
         html.push(this.attach('button', {
           className: 'btn btn-primary action app-widget-down',
           icon: 'arrow-down',
