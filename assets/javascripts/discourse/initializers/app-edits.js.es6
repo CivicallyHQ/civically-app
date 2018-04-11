@@ -14,9 +14,12 @@ export default {
       DiscoveryController.reopen(AppMixin, {});
     }
 
-    const apps = user.get('apps');
-    Object.keys(apps).map(name => Object.assign({}, { name }, apps[name])).forEach((app) => {
-      addCustomWidget(app);
-    })
+    if (user) {
+      const apps = user.get('apps');
+
+      Object.keys(apps).map(name => Object.assign({}, { name }, apps[name])).forEach((app) => {
+        addCustomWidget(app);
+      })
+    }
   }
 };

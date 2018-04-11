@@ -22,7 +22,7 @@ class CivicallyApp::App
   end
 
   def self.update(user, app, data)
-    existing = user.custom_fields[app] || {}
+    existing = JSON.parse(user.custom_fields[app]) || {}
 
     user.custom_fields[app] = JSON.generate(existing.merge(data))
 

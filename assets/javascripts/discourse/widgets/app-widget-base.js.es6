@@ -55,7 +55,7 @@ export default function(appName) {
 
       let content = [];
 
-      if (locked && mouseover) {
+      if (locked) {
         content.push(I18n.t(`app.${app.name.underscore()}.locked`));
       } else if (!locked) {
         content.push(this.contents());

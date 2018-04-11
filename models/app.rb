@@ -1,3 +1,5 @@
+APPS_WITH_NO_HEADER = ['civically-navigation', 'civically-place']
+
 class CivicallyApp::App
   include ActiveModel::SerializerSupport
 
@@ -53,7 +55,7 @@ class CivicallyApp::App
   def widget
     widget = {}
 
-    if @name === 'civically-navigation'
+    if APPS_WITH_NO_HEADER.include?(@name)
       widget[:no_header] = true
     end
 

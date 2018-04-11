@@ -13,16 +13,8 @@
     background-color: transparent;
   }
 
-  &:hover {
-    background: transparent !important;
-
-    .app-widget-content {
-      color: $primary;
-    }
-  }
-
   .app-widget-content {
-    color: rgba(0,0,0,0);
+    color: $primary-medium;
     transition: color 400ms linear;
     cursor: default;
   }
