@@ -8,18 +8,21 @@ export default createWidget('app-widget-edit', {
   tagName: 'div.app-widget-edit',
 
   buildClasses(attrs) {
-    return attrs.side;
+    return attrs.position;
   },
 
-  html(attrs) {
-    const userApps = this.currentUser.get('apps');
-    const { app } = attrs;
-    const order = app.order;
+  html(attrs, state) {
+    const user = this.currentUser;
+    const { app, side } = attrs;
+
+    const widgets = user.get(`app_widgets_${side}`);
+    if (!widgets || widget.length < 1) return;
+
+    const order = widgets.indexOf(app.name) + 1;
+
     let html = [];
 
-    if (!isNumeric(order) || !userApps) return;
-
-    if (userApps.length > 1) {
+    if (widgets.length > 1) {
       if (order !== 1) {
         html.push(this.attach('button', {
           className: 'btn btn-primary action app-widget-up',
@@ -28,7 +31,7 @@ export default createWidget('app-widget-edit', {
         }));
       }
 
-      if (order !== userApps.length - 1) {
+      if (order !== widgets.length - 1) {
         html.push(this.attach('button', {
           className: 'btn btn-primary action app-widget-down',
           icon: 'arrow-down',
@@ -37,7 +40,7 @@ export default createWidget('app-widget-edit', {
       }
     }
 
-    if (!attrs.noRemove) {
+    if (app.type !== 'system') {
       html.push(this.attach('button', {
         className: 'btn btn-primary action app-widget-remove',
         icon: 'times',
@@ -53,18 +56,23 @@ export default createWidget('app-widget-edit', {
   },
 
   moveAppWiget(up) {
+    const { app, side } = attrs;
     const user = this.currentUser;
-    const side = this.attrs.side;
-    const currentIndex = this.attrs.index;
+    const widgetsProp = `app_widgets_${side}`;
+    const widgets = user.get(widgetsProp);
+    const index = widgets.indexOf(app.name);
+    let targetIndex = 0;
 
-    let targetIndex = up ? currentIndex - 1 : currentIndex + 1;
-    let userApps = user.get(`${side}_apps`);
+    if (up || index > 0) {
+      targetIndex = up ? currentIndex - 1 : currentIndex + 1;
+    }
 
-    let tmp = userApps[targetIndex];
-    userApps[targetIndex] = userApps[currentIndex];
-    userApps[currentIndex] = tmp;
+    let tmp = widgets[targetIndex];
+    widgets[targetIndex] = widgets[currentIndex];
+    widgets[currentIndex] = tmp;
 
-    user.set(`${side}_apps`, userApps);
+    user.set(widgetsProp, widgets);
+
     this.scheduleRerender();
   },
 

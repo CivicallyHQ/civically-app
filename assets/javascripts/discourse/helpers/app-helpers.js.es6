@@ -1,9 +1,7 @@
 import { registerUnbound } from 'discourse-common/lib/helpers';
 
-registerUnbound('app-title', function(app) {
-  let title = I18n.t(`app.${app.name.underscore()}.title`);
-  let html = `<a href='/app/details/${app.name}' class='p-text p-link' target='_blank'>${title}</a>`;
-  return new Handlebars.SafeString(html);
+registerUnbound('app-title', function(appName) {
+  return new Handlebars.SafeString(I18n.t(`app.${appName.underscore()}.title`));
 });
 
 registerUnbound('app-about', function(app) {

@@ -1,7 +1,9 @@
 <div class="app-contents">
   <div class="app-title">
     <div class="p-text medium">
-      {{app-title app}}
+      {{#link-to 'app.details' app.name class="p-text p-link"}}
+        {{app-title app.name}}
+      {{/link-to}}
     </div>
     {{#if showAddApp}}
       {{d-button class=btnClasses action='addApp' label=btnLabel disabled=app.added}}

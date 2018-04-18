@@ -1,17 +1,17 @@
 import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 import { iconNode } from 'discourse-common/lib/icon-library';
-import { avatarImg } from 'discourse/widgets/post';
+import { avatarFor } from 'discourse/widgets/post';
+import { userPath } from 'discourse/lib/url';
 
 export default createWidget('app-widget-header', {
   tagName: 'div.app-widget-header',
 
   html(attrs) {
-    const { category, userApp, app } = attrs;
+    const { category, appData, app } = attrs;
 
     const underscoreName = app.name.underscore();
     const user = this.currentUser;
-    const icon = I18n.t(`app.${underscoreName}.icon`);
     let contents = [];
 
     // image to left of title
@@ -19,14 +19,15 @@ export default createWidget('app-widget-header', {
     let image = null;
 
     if (app.name === 'civically-user') {
-      image = avatarImg('tiny', {
+      image = avatarFor('tiny', {
         username: user.username,
         template: user.avatar_template,
-        name: user.name
+        name: user.name,
+        url: userPath(user.username)
       });
-    }
+    } else {
+      const icon = I18n.t(`app.${underscoreName}.icon`);
 
-    if (icon) {
       if (icon.indexOf('fa-') > -1) {
         image = iconNode(icon.replace('fa-', ''));
       } else if (icon.charAt(0) === ':' && icon.charAt(icon.length - 1) === ':') {
@@ -41,17 +42,19 @@ export default createWidget('app-widget-header', {
     }
 
     // title
-    let title = I18n.t(`app.${underscoreName}.title`);
+    let title;
 
     if (app.name === 'civically-user') {
-      title = user.username;
+      title = h('a.mention', `@${user.username}`);
+    } else {
+      title = I18n.t(`app.${underscoreName}.title`);
     }
 
     contents.push(h('div.app-widget-title', title));
 
     // right icon or button
 
-    if (userApp.enabled) {
+    if (appData.enabled) {
       contents.push(this.attach('app-widget-menu', {
         category,
         app

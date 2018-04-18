@@ -1,20 +1,36 @@
 <div class="app-contents">
   <div class="app-title">
-    {{app-title app}}
-  </div>
-  <div class="app-controls">
-    {{#if canRemove}}
-      {{d-button action='changeSide' label='app.side.change.btn' }}
-      {{d-button action='removeApp' label='app.remove.btn'}}
+    {{#if storeApp}}
+      {{#link-to 'app.details' app.name class="p-text p-link"}}
+        {{app-title app.name}}
+      {{/link-to}}
+    {{else}}
+      <span class="p-text p-link">
+        {{app-title app.name}}
+      </span>
     {{/if}}
+    <a class="remove p-link" {{action 'removeApp'}}>
+      {{i18n 'app.remove.btn'}}
+    </a>
+  </div>
+  <div class="app-widget">
+    <div class="title">
+      {{i18n 'app.widget'}}
+    </div>
+    <ul class="attributes">
+      <li class="position">
+        <span>{{i18n 'app.user.position'}}:</span>
+        {{userAppData.position}}
+      </li>
+    </ul>
   </div>
   <div class="app-gutter">
-    <div class="app-side">
-      <span>{{i18n 'app.user.side'}}:</span>
-      {{app.side}}
-    </div>
     <div class="app-version">
+      <span>{{i18n 'app.version'}}:</span>
       {{app.version}}
     </div>
+    <a class="change-position p-link" {{action 'updateData'}}>
+      {{i18n 'app.update.action'}}
+    </a>
   </div>
 </div>

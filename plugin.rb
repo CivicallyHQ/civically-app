@@ -182,17 +182,9 @@ DiscourseEvent.on(:petition_ready) do
 end
 
 after_initialize do
-  add_to_serializer(:current_user, :apps) { object.apps }
   add_to_serializer(:site, :apps) {
     ActiveModel::ArraySerializer.new(CivicallyApp::App.all_apps, each_serializer: CivicallyApp::AppSerializer).as_json
   }
-
-  class ::SiteSerializer
-    has_many
-    def site
-
-    end
-  end
 
   class Plugin::Metadata
     attr_accessor :name, :image_url, :title, :app, :default
@@ -221,7 +213,7 @@ after_initialize do
     post "create" => "app#create"
     post "add" => "app#add"
     post "remove" => "app#remove"
-    post "change_side" => "app#change_side"
+    post "change_position" => "app#change_position"
     post "save" => "app#save"
   end
 
@@ -232,7 +224,6 @@ after_initialize do
     end
   end
 
-  load File.expand_path('../models/app.rb', __FILE__)
   load File.expand_path('../controllers/app.rb', __FILE__)
   load File.expand_path('../serializers/app.rb', __FILE__)
   load File.expand_path('../lib/app.rb', __FILE__)
@@ -243,16 +234,28 @@ after_initialize do
 
   require_dependency 'user'
   class ::User
-    def apps
-      @apps ||= begin
-        all_apps = CivicallyApp::App.all_apps
+    def app_data
+      @app_data ||= CivicallyApp::App.user_app_data(self)
+    end
 
-        custom_fields.select do |k, v|
-          all_apps.map(&:name).include?(k)
-        end.map do |k, v|
-          [k, JSON.parse(v)]
-        end.to_h
+    def app_widgets_left
+      if self.custom_fields['app_widgets_left']
+        [*self.custom_fields['app_widgets_left']]
+      else
+        []
+      end
+    end
+
+    def app_widgets_right
+      if self.custom_fields['app_widgets_right']
+        [*self.custom_fields['app_widgets_right']]
+      else
+        []
       end
     end
   end
+
+  add_to_serializer(:current_user, :app_data) { object.app_data }
+  add_to_serializer(:current_user, :app_widgets_left) { object.app_widgets_left }
+  add_to_serializer(:current_user, :app_widgets_right) { object.app_widgets_right }
 end

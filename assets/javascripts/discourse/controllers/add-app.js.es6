@@ -4,20 +4,20 @@ import App from '../models/app';
 export default Ember.Controller.extend({
   title: 'app.add.title',
   added: null,
-  sideToggle: true,
+  positionToggle: true,
 
-  @computed('sideToggle')
-  side(toggle) {
+  @computed('positionToggle')
+  widgetPosition(toggle) {
     return toggle ? 'right' : 'left';
   },
 
-  @computed('sideToggle')
-  leftSideClass(toggle) {
+  @computed('positionToggle')
+  leftPositionClass(toggle) {
     return toggle ? '' : 'enabled';
   },
 
-  @computed('sideToggle')
-  rightSideClass(toggle) {
+  @computed('positionToggle')
+  rightPositionClass(toggle) {
     return toggle ? 'enabled' : '';
   },
 
@@ -27,13 +27,25 @@ export default Ember.Controller.extend({
     },
 
     addApp() {
-      App.add(this.get('model.name'), this.get('side')).then(() => {
-        this.set('added', true);
+      const userId = this.get('currentUser.id');
+      const widgetPosition = this.get('widgetPosition');
+
+      const app = {
+        name: appName,
+        widget: {
+          position: widgetPosition
+        }
+      }
+
+      App.add(userId, app).then((result) => {
+        if (result.app_data) {
+          this.get('added')(result.app_data);
+        }
       });
     },
 
-    toggleSide() {
-      this.toggleProperty('sideToggle');
+    togglePosition() {
+      this.toggleProperty('positionToggle');
     }
   }
 });

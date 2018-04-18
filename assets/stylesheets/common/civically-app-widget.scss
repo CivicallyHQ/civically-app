@@ -1,15 +1,9 @@
 .app-widget.locked {
-  height: 80px;
   border-radius: 4px;
   background-color: #f7f8ff;
   transition: background-color 400ms linear;
 
   .app-widget-container {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     background-color: transparent;
   }
 
@@ -24,11 +18,15 @@
   width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
+
+  img {
+    max-height: 20px;
+  }
 
   .app-widget-title {
     flex: 1;
-    margin: 0 5px;
+    margin: 0 8px;
   }
 
   i {
@@ -38,6 +36,10 @@
 
 .app-widget-container {
   @extend .widget-container;
+}
+
+.app-widget .app-widget-container {
+  padding: 10px;
 }
 
 .app-widget-header {

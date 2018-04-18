@@ -24,23 +24,22 @@ export default Ember.Component.extend({
 
   actions: {
     addApp() {
-      const name = this.get('app.name');
-      let controller = showModal('add-app', { model: { name }});
+      const appName = this.get('app.name');
+      const user = this.get('currentUser');
+      let controller = showModal('add-app', {
+        model: { appName },
+        added: (appData) => {
+          const position = appData.widget.position;
+          const widgetsProp = `app_widgets_${position}`;
+          let widgets = user.get(widgetsProp);
 
-      controller.addObserver('added', () => {
-        if (controller.get('added')) {
-          this.set('app.added', true);
+          widgets.push(appName);
 
-          const user = this.get('currentUser');
-          const side = controller.get('side');
-          const appName = this.get('app.name');
+          let props = {};
+          props[appName] = appData;
+          props[widgetsProp] = widgets;
+          user.setProperties(props);
 
-          let apps = user.get('apps');
-          apps.push(appName);
-          user.set('apps', apps);
-          user.set(`${appName}`, { side });
-
-          controller.set('added', null);
           controller.send('closeModal');
         }
       });

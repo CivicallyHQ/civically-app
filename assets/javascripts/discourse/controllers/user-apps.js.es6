@@ -17,8 +17,14 @@ export default Ember.Controller.extend({
       });
     },
 
-    changeSide(app) {
-      const controller = showModal('change-app-side', { model: app });
+    updateData(app) {
+      const user = this.get('currentUser');
+      const controller = showModal('update-app-data', {
+        model: app,
+        updated: (appData) => {
+          user.set(app.name, appData);
+        }
+      });
       controller.setup();
     },
 

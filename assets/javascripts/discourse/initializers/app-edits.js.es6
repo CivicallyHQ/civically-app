@@ -15,10 +15,25 @@ export default {
     }
 
     if (user) {
-      const apps = user.get('apps');
+      const userAppData = user.get('app_data');
+      const widgetSides = ['left', 'right'];
+      let widgets = [];
 
-      Object.keys(apps).map(name => Object.assign({}, { name }, apps[name])).forEach((app) => {
-        addCustomWidget(app);
+      widgetSides.forEach((side) => {
+        const widgetList = user.get(`app_widgets_${side}`);
+        const sideWidgets = widgetList.map(function(name, i) {
+          return {
+            name,
+            position: side,
+            order: i + 1
+          }
+        });
+
+        widgets = widgets.concat(sideWidgets);
+      })
+
+      widgets.forEach((widget) => {
+        addCustomWidget(widget);
       })
     }
   }

@@ -4,18 +4,20 @@ en:
       guest: "You need an account to use this feature"
       no_results: "No apps available"
       about: "About"
-      side:
+      widget: "Widget"
+      version: "Version"
+      position:
         left: "Left"
         right: "Right"
         change:
-          btn: "Change Widget Side"
-          title: "Change Widget Side"
-          body: "Select a side for the {{appTitle}} widget."
+          action: "Change"
+          title: "Change Position"
+          body: "Select a position for the {{appTitle}} widget."
       petition:
         title: "Submit App"
       add:
         title: "Add App"
-        body: "Select a side for {{appTitle}}"
+        body: "Select a position for {{appTitle}}"
         btn: "Add"
       added:
         btn: "Added"
@@ -27,7 +29,7 @@ en:
       user:
         label: "Apps"
         title: 'Your Apps'
-        side: "Side"
+        position: "Position"
       store:
         label: "App Store"
         link: "Add Apps"

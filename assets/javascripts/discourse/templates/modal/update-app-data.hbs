@@ -1,11 +1,11 @@
-{{#d-modal-body class="add-app" title=title}}
-  <div class="toggle-app-position-body">{{{i18n 'app.add.body' appTitle=(app-title model.appName)}}}</div>
+{{#d-modal-body class="change-app-position" title=title}}
+  <div class="toggle-app-position-body">{{{i18n 'app.position.change.body' appTitle=(app-title model.name)}}}</div>
   <div class="toggle-app-position" {{action 'togglePosition'}}>
     <label class="{{leftPositionClass}}">{{i18n 'app.position.left'}}</label>
     <label class="{{rightPositionClass}}">{{i18n 'app.position.right'}}</label>
   </div>
 {{/d-modal-body}}
 <div class="modal-footer">
-  {{d-button action="addApp" label="app.add.btn" class="btn-primary"}}
+  {{d-button action="update" label="app.update.action" class="btn-primary" disabled=updateDisabled}}
   {{d-button action="cancel" label="composer.cancel"}}
 </div>

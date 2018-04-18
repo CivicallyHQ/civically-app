@@ -26,20 +26,20 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    editSidebars(side) {
-      if (this.get(`editing_${side}`)) {
+    editPositionbars(position) {
+      if (this.get(`editing_${position}`)) {
 
         const user = this.get('currentUser');
         let data = {};
-        data[`${side}_apps`] = user.get(`${side}_apps`);
+        data[`${position}_apps`] = user.get(`${position}_apps`);
 
-        App.save(data).then(() => this.set(`editing_${side}`, false));
+        App.save(data).then(() => this.set(`editing_${position}`, false));
       } else {
-        this.set(`editing_${side}`, true);
+        this.set(`editing_${position}`, true);
       }
     },
 
-    addToSidebars() {
+    addToPositionbars() {
       this.transitionToRoute('app.store');
     }
   }
