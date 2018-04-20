@@ -4,26 +4,16 @@ import DiscourseURL from 'discourse/lib/url';
 export default Ember.Controller.extend({
   actions: {
     removeApp(app) {
-      const controller = showModal('remove-app', { model: app });
-
-      controller.addObserver('removed', () => {
-        if (controller.get('removed')) {
-          let apps = this.get('apps');
-          let newApps = apps.filter((a) => a.name !== app.name);
-          this.set('apps', newApps);
-          controller.set('removed', null);
-        }
-        controller.send('closeModal');
+      const user = this.get('currentUser');
+      const controller = showModal('remove-app', {
+        model: app
       });
     },
 
-    updateData(app) {
+    updateApp(appWithData) {
       const user = this.get('currentUser');
       const controller = showModal('update-app-data', {
-        model: app,
-        updated: (appData) => {
-          user.set(app.name, appData);
-        }
+        model: appWithData
       });
       controller.setup();
     },

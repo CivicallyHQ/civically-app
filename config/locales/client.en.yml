@@ -6,30 +6,35 @@ en:
       about: "About"
       widget: "Widget"
       version: "Version"
-      position:
-        left: "Left"
-        right: "Right"
-        change:
-          action: "Change"
-          title: "Change Position"
-          body: "Select a position for the {{appTitle}} widget."
+      data:
+        edit:
+          action: "Edit"
+          title: "Edit App Data"
+      widget:
+        label: "Widget"
+        position:
+          label: "Position"
+          edit: "Edit"
+          save: "Save"
+          description: "Select a position for the {{appTitle}} widget."
+          left: "Left"
+          right: "Right"
+
       petition:
         title: "Submit App"
       add:
         title: "Add App"
-        body: "Select a position for {{appTitle}}"
         btn: "Add"
       added:
         btn: "Added"
       authors: "authors"
       remove:
         title: "Remove App"
-        body: "Are you sure you want to remove <b>{{appTitle}}</b> from your account?"
+        body: "Are you sure you want to remove {{appTitle}} from your account?"
         btn: "Remove"
       user:
         label: "Apps"
         title: 'Your Apps'
-        position: "Position"
       store:
         label: "App Store"
         link: "Add Apps"

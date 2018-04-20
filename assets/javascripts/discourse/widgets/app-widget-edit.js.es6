@@ -8,7 +8,7 @@ export default createWidget('app-widget-edit', {
   tagName: 'div.app-widget-edit',
 
   buildClasses(attrs) {
-    return attrs.position;
+    return attrs.side;
   },
 
   html(attrs, state) {
@@ -16,14 +16,14 @@ export default createWidget('app-widget-edit', {
     const { app, side } = attrs;
 
     const widgets = user.get(`app_widgets_${side}`);
-    if (!widgets || widget.length < 1) return;
+    if (!widgets || widgets.length < 1) return;
 
-    const order = widgets.indexOf(app.name) + 1;
+    const index = widgets.indexOf(app.name);
 
     let html = [];
 
     if (widgets.length > 1) {
-      if (order !== 1) {
+      if (index !== 0) {
         html.push(this.attach('button', {
           className: 'btn btn-primary action app-widget-up',
           icon: 'arrow-up',
@@ -31,7 +31,7 @@ export default createWidget('app-widget-edit', {
         }));
       }
 
-      if (order !== widgets.length - 1) {
+      if (index !== widgets.length - 1) {
         html.push(this.attach('button', {
           className: 'btn btn-primary action app-widget-down',
           icon: 'arrow-down',
@@ -55,25 +55,30 @@ export default createWidget('app-widget-edit', {
     return null;
   },
 
-  moveAppWiget(up) {
-    const { app, side } = attrs;
+  moveAppWidget(up) {
+    const { app, side } = this.attrs;
     const user = this.currentUser;
-    const widgetsProp = `app_widgets_${side}`;
-    const widgets = user.get(widgetsProp);
-    const index = widgets.indexOf(app.name);
-    let targetIndex = 0;
+    let appData = user.get('app_data');
 
-    if (up || index > 0) {
-      targetIndex = up ? currentIndex - 1 : currentIndex + 1;
-    }
+    const currentIndex = widgets.findIndex(w => w.name === app.name);
+    const targetIndex = up ? currentIndex - 1 : currentIndex + 1;
+    let widgetList = buildWidgetList(appData);
 
-    let tmp = widgets[targetIndex];
-    widgets[targetIndex] = widgets[currentIndex];
-    widgets[currentIndex] = tmp;
+    let temp = widgetList[targetIndex];
+    widgetList[targetIndex] = widgetList[currentIndex];
+    widgetList[currentIndex] = temp;
 
-    user.set(widgetsProp, widgets);
+    widgetList = widgetList.map((w, i) => {
+      return {
+        name: w.name,
+        position: w.position,
+        order: i
+      }
+    })
 
-    this.scheduleRerender();
+    appData = updateAppWidgets(widgetList, appData);
+
+    user.set('app_data', appData);
   },
 
   moveUp() {

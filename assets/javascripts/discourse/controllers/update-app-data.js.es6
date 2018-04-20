@@ -1,19 +1,21 @@
 import { default as computed } from 'ember-addons/ember-computed-decorators';
+import ModalFunctionality from 'discourse/mixins/modal-functionality';
+import { extractError } from 'discourse/lib/ajax-error';
+import { applyAppWidgets } from '../lib/app-utilities';
 import App from '../models/app';
 
-export default Ember.Controller.extend({
-  title: 'app.position.change.title',
-  updateDisabled: Ember.computed.alias('positionUnchanged'),
+export default Ember.Controller.extend(ModalFunctionality, {
+  title: 'app.data.edit.title',
   position: null,
 
   setup() {
-    const position = this.get('appData.position');
+    const position = this.get('model.widget.position');
     this.set('position', position);
   },
 
-  @computed('position', 'appData.position')
-  positionUnchanged(position, oldPosition) {
-    return position === oldPosition;
+  @computed('position', 'model.position')
+  positionChanged(position, oldPosition) {
+    return position !== oldPosition;
   },
 
   @computed('position')
@@ -26,23 +28,37 @@ export default Ember.Controller.extend({
     return position === 'right' ? 'enabled' : '';
   },
 
+  @computed('positionChanged')
+  updateDisabled(positionChanged) {
+    return !positionChanged;
+  },
+
   actions: {
     cancel() {
       this.send('closeModal');
     },
 
-    changePosition() {
+    update() {
       const updateDisabled = this.get('updateDisabled');
       if (updateDisabled) return;
 
-      const appName = this.get('model.name');
-      const position = this.get('position');
+      const user = this.get('currentUser');
+      const app = JSON.parse(JSON.stringify(this.get('model')));
 
-      Apps.update_data(appName, position).then((result) => {
+      if (this.get('positionChanged')) {
+        app.widget.position = this.get('position');
+      }
+
+      App.update(user.id, app).then((result) => {
         if (result.app_data) {
-          this.get('updated')(result.app_data);
+          const appData = JSON.parse(JSON.stringify(user.get('app_data')));
+          appData[app.name] = result.app_data;
+          user.set('app_data', appData);
+          user.notifyPropertyChange(`app_data.${app.name}`);
+          applyAppWidgets(user);
         }
-      });
+        this.send('closeModal');
+      }).catch(err => this.flash(extractError(err), 'error'));
     },
 
     togglePosition() {

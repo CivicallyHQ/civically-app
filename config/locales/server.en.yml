@@ -62,6 +62,7 @@ en:
           <br>
           Read <a href='/t/apps-and-app-store' target='_blank'>Creating an App</a> to learn more.
     error:
+      default: "We encountered a problem. Please try again."
       failed_to_create_petition_topic: "Failed to create petition topic: %{errors}"
 
   about_apps:

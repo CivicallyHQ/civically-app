@@ -95,12 +95,16 @@ class CivicallyApp::App
   end
 
   def self.find(name)
-    self.all_apps.select { |a| a.name === name }
+    self.all_apps.find { |a| a.name === name }
+  end
+
+  def self.app_exists(app_name)
+    self.find(app_name).present?
   end
 
   def self.add(user, app_name, app_data)
     if user.custom_fields[app_name]
-      return { reject: true, reason: "App already added" }
+      return { error: true, reason: "App already added" }
     end
 
     app_data[:enabled] = false if app_data[:enabled].blank?
@@ -117,14 +121,14 @@ class CivicallyApp::App
       user.save_custom_fields(true)
     end
 
-    user.app_data
+    { success: true, app_data: user.app_data[app_name] }
   end
 
   def self.remove(user, app_name)
     app = self.find(app_name)
 
     if app.type === 'system'
-      return { reject: true, reason: "Cannot remove system app" }
+      return { error: true, reason: "Cannot remove system app" }
     end
 
     UserCustomField.transaction do
@@ -138,25 +142,62 @@ class CivicallyApp::App
       user.save_custom_fields(true)
     end
 
-    { success: 'OK' }
+    { success: true, app_name: app_name }
   end
 
-  def self.update_data(user, app_name, app_data)
-    unless self.find(app_name).any?
-      return { reject: true, reason: "App does not exist" }
+  def self.update(user, app_name, app_data, save = true)
+
+    unless app_exists(app_name)
+      return { error: true, reason: "App does not exist" }
     end
 
-    existing_data = user.app_data[app_name] || {}
+    widget_data = app_data.with_indifferent_access[:widget]
+    app_data = app_data.except(:widget) if widget_data
 
-    new_data = existing_data.with_indifferent_access
+    existing_app_data = user.app_data[app_name] || {}
+    existing_widget_data = existing_app_data.with_indifferent_access[:widget]
+
+    new_data = existing_app_data.with_indifferent_access
       .merge(app_data.with_indifferent_access)
+
+    if widget_data && existing_widget_data
+      new_data[:widget] = existing_widget_data.with_indifferent_access
+        .merge(widget_data.with_indifferent_access)
+    elsif widget_data
+      new_data[:widget] = widget_data
+    end
 
     user.custom_fields[app_name] = JSON.generate(new_data)
 
+    return user if !save
+
     if user.save_custom_fields(true)
-      user.app_data[app_name]
+      { success: true, app_data: new_data }
     else
-      { reject: true, reason: "Failed to update app data" }
+      { error: true, reason: "Failed to update app data" }
+    end
+  end
+
+  def batch_update(user, apps)
+    results = {}
+
+    UserCustomField.transaction do
+      app.each do |app|
+        results[app[:name]] = self.update(user, app[:name], app.except(:name))
+      end
+    end
+
+    errors = []
+    results.each do |app_name, result|
+      if result.error
+        errors.push(app: app_name, reason: result.reason)
+      end
+    end
+
+    if errors.any?
+      { error: true, errors: errors }
+    else
+      { success: true, apps: results }
     end
   end
 

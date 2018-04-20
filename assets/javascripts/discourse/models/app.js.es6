@@ -7,29 +7,30 @@ App.reopenClass({
     return ajax('/apps/add', { type: 'POST', data: {
       user_id: userId,
       app
-    }}).then(function(result) {
-      return result;
-    });
+    }});
   },
 
   remove(userId, name) {
-    return ajax('/apps/remove', { type: 'POST', data: {
+    return ajax('/app/remove', { type: 'POST', data: {
       user_id: userId,
       app: {
         name
       }
-    }}).then(function(result) {
-      return result;
-    });
+    }});
   },
 
-  update_data(userId, app) {
-    return ajax('/apps/update', { type: 'POST', data: {
+  update(userId, app) {
+    return ajax('/app/update', { type: 'POST', data: {
       user_id: userId,
       app
-    }}).then(function(result) {
-      return result;
-    });
+    }});
+  },
+
+  batchUpdate(userId, apps) {
+    return ajax('/app/batch-update', { type: 'POST', data: {
+      user_id: userId,
+      apps
+    }});
   }
 });
 

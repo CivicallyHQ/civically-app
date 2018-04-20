@@ -213,8 +213,8 @@ after_initialize do
     post "create" => "app#create"
     post "add" => "app#add"
     post "remove" => "app#remove"
-    post "change_position" => "app#change_position"
-    post "save" => "app#save"
+    post "update" => "app#update"
+    post "batch-update" => "app#batch_update"
   end
 
   Discourse::Application.routes.append do
@@ -237,25 +237,7 @@ after_initialize do
     def app_data
       @app_data ||= CivicallyApp::App.user_app_data(self)
     end
-
-    def app_widgets_left
-      if self.custom_fields['app_widgets_left']
-        [*self.custom_fields['app_widgets_left']]
-      else
-        []
-      end
-    end
-
-    def app_widgets_right
-      if self.custom_fields['app_widgets_right']
-        [*self.custom_fields['app_widgets_right']]
-      else
-        []
-      end
-    end
   end
 
   add_to_serializer(:current_user, :app_data) { object.app_data }
-  add_to_serializer(:current_user, :app_widgets_left) { object.app_widgets_left }
-  add_to_serializer(:current_user, :app_widgets_right) { object.app_widgets_right }
 end

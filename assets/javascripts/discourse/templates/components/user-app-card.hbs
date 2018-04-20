@@ -15,12 +15,12 @@
   </div>
   <div class="app-widget">
     <div class="title">
-      {{i18n 'app.widget'}}
+      {{i18n 'app.widget.label'}}
     </div>
     <ul class="attributes">
       <li class="position">
-        <span>{{i18n 'app.user.position'}}:</span>
-        {{userAppData.position}}
+        <span>{{i18n 'app.widget.position.label'}}:</span>
+        {{appWithData.widget.position}}
       </li>
     </ul>
   </div>
@@ -29,8 +29,8 @@
       <span>{{i18n 'app.version'}}:</span>
       {{app.version}}
     </div>
-    <a class="change-position p-link" {{action 'updateData'}}>
-      {{i18n 'app.update.action'}}
+    <a class="change-position p-link" {{action 'updateApp'}}>
+      {{i18n 'app.data.edit.action'}}
     </a>
   </div>
 </div>

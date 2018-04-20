@@ -109,3 +109,19 @@
     }
   }
 }
+
+.app-widget-controls {
+  position: absolute;
+  bottom: 0;
+
+  .user-control {
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  a {
+    color: dark-light-diff($primary, $secondary, 60%, -65%);
+  }
+}
