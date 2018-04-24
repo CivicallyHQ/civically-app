@@ -1,6 +1,13 @@
 import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Route.extend({
+  redirect() {
+    if (!Discourse.SiteSettings.app_store_enabled) {
+      const url = Discourse.SiteSettings.app_store_redirect_url;
+      return DiscourseURL.routeTo(url, { replaceURL: true });
+    }
+  },
+
   model() {
     let hash = { general: ajax('/app/store/general') };
 

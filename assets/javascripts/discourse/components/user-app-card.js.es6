@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   canRemove: true,
   canMove: true,
   storeApp: Ember.computed.equal('app.type', 'store'),
+  canRemove: Ember.computed.equal('app.type', 'store'),
   updated: false,
 
   @on('init')

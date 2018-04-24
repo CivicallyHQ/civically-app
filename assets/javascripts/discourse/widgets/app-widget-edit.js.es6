@@ -1,24 +1,46 @@
+import {
+  buildWidgetList,
+  getPositionWidgets,
+  updateWidgetOrder,
+  updateClientWidgetData,
+  applyAppWidgets
+} from '../lib/app-utilities';
+
 import { createWidget } from 'discourse/widgets/widget';
 
-var isNumeric = function(val) {
+const isNumeric = function(val) {
   return !isNaN(parseFloat(val)) && isFinite(val);
 };
 
 export default createWidget('app-widget-edit', {
   tagName: 'div.app-widget-edit',
+  buildKey: (attrs) => `${attrs.app.name}-widget-edit`,
+
+  defaultState(attrs) {
+    return {
+      index: null
+    }
+  },
 
   buildClasses(attrs) {
     return attrs.side;
   },
 
-  html(attrs, state) {
-    const user = this.currentUser;
-    const { app, side } = attrs;
+  getCurrentWidgetList(user, side) {
+    const appData = user.get('app_data');
+    const widgetList = buildWidgetList(appData);
+    return getPositionWidgets(widgetList, side);
+  },
 
-    const widgets = user.get(`app_widgets_${side}`);
+  html(attrs, state) {
+    const { app, side } = attrs;
+    const user = this.currentUser;
+
+    const widgets = this.getCurrentWidgetList(user, side);
+
     if (!widgets || widgets.length < 1) return;
 
-    const index = widgets.indexOf(app.name);
+    let index = state.index = widgets.indexOf(app.name);
 
     let html = [];
 
@@ -51,41 +73,30 @@ export default createWidget('app-widget-edit', {
     return html;
   },
 
-  pinnedTip() {
-    return null;
-  },
-
-  moveAppWidget(up) {
-    const { app, side } = this.attrs;
+  changeWidgetOrder(currentIndex, targetIndex) {
     const user = this.currentUser;
+    const { side } = this.attrs;
+
     let appData = user.get('app_data');
 
-    const currentIndex = widgets.findIndex(w => w.name === app.name);
-    const targetIndex = up ? currentIndex - 1 : currentIndex + 1;
     let widgetList = buildWidgetList(appData);
 
-    let temp = widgetList[targetIndex];
-    widgetList[targetIndex] = widgetList[currentIndex];
-    widgetList[currentIndex] = temp;
+    widgetList = updateWidgetOrder(widgetList, side, currentIndex, targetIndex);
 
-    widgetList = widgetList.map((w, i) => {
-      return {
-        name: w.name,
-        position: w.position,
-        order: i
-      }
-    })
-
-    appData = updateAppWidgets(widgetList, appData);
+    appData = updateClientWidgetData(widgetList, appData);
 
     user.set('app_data', appData);
+
+    applyAppWidgets(user);
   },
 
   moveUp() {
-    this.moveAppWidget(true);
+    const { index } = this.state;
+    this.changeWidgetOrder(index, index - 1);
   },
 
   moveDown() {
-    this.moveAppWidget(false);
+    const { index } = this.state;
+    this.changeWidgetOrder(index, index + 1);
   }
 });

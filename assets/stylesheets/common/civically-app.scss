@@ -71,6 +71,10 @@
 
 .app-store {
   padding-bottom: 30px;
+  background-color: $secondary;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 60px;
 
   .p-text.large, .p-text.medium {
     display: inline-block;
@@ -79,14 +83,17 @@
   }
 
   .submit {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   .store-apps {
-    padding: 30px 0;
+    padding: 20px;
+    min-height: 250px;
     width: 100%;
+    box-sizing: border-box;
     position: relative;
     overflow: auto;
+    border: 1px solid $tertiary;
 
     &.inline {
       white-space: nowrap;
@@ -164,8 +171,6 @@
   }
 
   .app-gutter {
-    margin-top: 5px;
-
     .app-version {
       font-size: 0.9em;
       margin-right: 10px;
@@ -219,6 +224,7 @@
   .app-widget {
     background-color: $primary-low;
     padding: 10px;
+    margin-bottom: 10px;
 
     .title {
       font-size: 1.1em;
@@ -228,10 +234,10 @@
       margin: 8px 0 0 0;
       list-style: none;
     }
+  }
 
-    .change-position {
-      float: right;
-    }
+  .edit {
+    float: right;
   }
 }
 

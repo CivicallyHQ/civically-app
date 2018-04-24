@@ -1,16 +1,15 @@
-WIDGET_ATTRIBUTES = [
-  :position,
-  :order
-]
-
-DATA_ATTRIBUTES = [
+PERMITTED_ATTRIBUTES = [
+  :name,
   :enabled,
-  widget: WIDGET_ATTRIBUTES
+  widget: [
+    :position,
+    :order
+  ]
 ]
 
 class CivicallyApp::AppController < ::ApplicationController
   before_action :ensure_logged_in, only: [:place, :user, :add, :remove, :update]
-  before_action :find_user, only: [:add, :remove, :update]
+  before_action :find_user, only: [:add, :remove, :update, :batch_update]
 
   attr_accessor :user
 
@@ -37,7 +36,7 @@ class CivicallyApp::AppController < ::ApplicationController
   end
 
   def add
-    result = CivicallyApp::App.add(@user, app_params[:name], app_data)
+    result = CivicallyApp::App.add(@user, app_params[:name], app_params.except(:name).to_h)
     app_responder(result)
   end
 
@@ -47,12 +46,12 @@ class CivicallyApp::AppController < ::ApplicationController
   end
 
   def update
-    result = CivicallyApp::App.update(@user, app_params[:name], app_data)
+    result = CivicallyApp::App.update(@user, app_params[:name], app_params.except(:name).to_h)
     app_responder(result)
   end
 
   def batch_update
-    result = CivicallyApp::App.batch_update(@user, batch_params)
+    result = CivicallyApp::App.batch_update(@user, batch_params[:apps])
     app_responder(result)
   end
 
@@ -73,25 +72,10 @@ class CivicallyApp::AppController < ::ApplicationController
   end
 
   def app_params
-    permitted_params = DATA_ATTRIBUTES + [:name]
-    params.require(:app).permit(permitted_params)
-  end
-
-  def app_data
-    app_hash = app_params.to_h
-    app_hash.select { |k, v|
-      if k.to_sym == :widget
-        app_hash[:widget].all? do |k, v|
-          WIDGET_ATTRIBUTES.include?(k.to_sym)
-        end
-      else
-        DATA_ATTRIBUTES.include?(k.to_sym)
-      end
-    }
+    params.require(:app).permit(PERMITTED_ATTRIBUTES)
   end
 
   def batch_params
-    permitted_params = DATA_ATTRIBUTES + [:name]
-    params.require(:apps).permit(permitted_params)
+    params.permit(apps: [PERMITTED_ATTRIBUTES])
   end
 end

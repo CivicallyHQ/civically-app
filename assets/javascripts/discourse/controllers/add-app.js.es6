@@ -1,7 +1,10 @@
 import { default as computed } from 'ember-addons/ember-computed-decorators';
+import ModalFunctionality from 'discourse/mixins/modal-functionality';
+import { extractError } from 'discourse/lib/ajax-error';
+import { updateAppData, applyAppWidgets } from '../lib/app-utilities';
 import App from '../models/app';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(ModalFunctionality, {
   title: 'app.add.title',
   added: null,
   positionToggle: true,
@@ -27,21 +30,25 @@ export default Ember.Controller.extend({
     },
 
     addApp() {
-      const userId = this.get('currentUser.id');
-      const widgetPosition = this.get('widgetPosition');
+      const user = this.get('currentUser');
+      const position = this.get('widgetPosition');
+      const name = this.get('model.appName');
 
       const app = {
-        name: appName,
+        name,
+        enabled: true,
         widget: {
-          position: widgetPosition
+          position
         }
       }
 
-      App.add(userId, app).then((result) => {
+      App.add(user.id, app).then((result) => {
         if (result.app_data) {
-          this.get('added')(result.app_data);
+          updateAppData(user, name, result.app_data);
+          applyAppWidgets(user);
         }
-      });
+        this.send('closeModal');
+      }).catch(err => this.flash(extractError(err), 'error'));
     },
 
     togglePosition() {

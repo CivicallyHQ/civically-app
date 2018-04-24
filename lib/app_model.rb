@@ -15,7 +15,7 @@ class CivicallyApp::App
 
   def initialize(plugin)
     @metadata = plugin.metadata
-    @name = plugin.metadata.name
+    @name = plugin.metadata.name.dasherize
     @type = plugin.metadata.app
     @version = plugin.metadata.version
     @authors = plugin.metadata.authors
@@ -70,20 +70,20 @@ class CivicallyApp::App
     @all_apps ||= all_plugins.select { |p| p.metadata.app.present? }.map { |p| CivicallyApp::App.new(p) }
   end
 
-  def self.external_apps
-    @external_apps ||= all_apps.select { |a| a.type === 'external' }
+  def self.store_apps
+    @store_apps ||= all_apps.select { |a| a.type === 'store' }
   end
 
   def self.general_apps
-    @general_apps ||= external_apps.select { |a| !a.place_category_id }
+    @general_apps ||= store_apps.select { |a| !a.place_category_id }
   end
 
   def self.place_apps(user)
-    @place_apps ||= external_apps.select { |a| a.place_category_id.to_i === user.custom_fields['place_category_id'].to_i }
+    @place_apps ||= store_apps.select { |a| a.place_category_id.to_i === user.custom_fields['place_category_id'].to_i }
   end
 
   def self.user_apps(user)
-    @user_apps ||= all_apps.select { |a| user.custom_fields[a.name].present? }
+    all_apps.select { |a| user.custom_fields[a.name].present? }
   end
 
   def self.user_app_data(user)
@@ -102,26 +102,49 @@ class CivicallyApp::App
     self.find(app_name).present?
   end
 
+  def self.user_position_widgets(user, position)
+    self.user_app_data(user).select do |k, v|
+      widget = k['widget']
+      widget.present? &&
+      widget['position'].present? &&
+      widget['order'].present? &&
+      widget['position'] == position
+    end.sort_by { |k, v| v['widget']['order'].to_i }.to_h
+      .map { |k, v| k }
+  end
+
+  def self.next_in_position(user, position)
+
+  end
+
   def self.add(user, app_name, app_data)
+
+    unless self.app_exists(app_name)
+      return { error: true, reason: "App does not exist" }
+    end
+
     if user.custom_fields[app_name]
       return { error: true, reason: "App already added" }
     end
 
-    app_data[:enabled] = false if app_data[:enabled].blank?
-    app_data[:widget] = { position: 'left' } if app_data[:widget].blank?
+    app_data['enabled'] = false if app_data['enabled'].blank?
 
-    UserCustomField.transaction do
-      user.custom_fields[app_name] = JSON.generate(app_data)
+    if widget = app_data['widget']
+      widget['position'] = 'left' if !widget['position']
 
-      widget_field_name = "app_widgets_#{app_data[:widget][:position]}".freeze
-      widgets = user.send(widget_field_name)
-
-      user.custom_fields[widget_field_name] = widgets.push(app_name)
-
-      user.save_custom_fields(true)
+      if !widget['order']
+        position_widgets = user_position_widgets(user, widget['position'])
+        widget['order'] = position_widgets.length
+      end
     end
 
-    { success: true, app_data: user.app_data[app_name] }
+    user.custom_fields[app_name] = JSON.generate(app_data)
+
+    if user.save_custom_fields(true)
+      { success: true, app_data: user.app_data[app_name] }
+    else
+      { error: true, reason: "Failed to add app" }
+    end
   end
 
   def self.remove(user, app_name)
@@ -131,24 +154,23 @@ class CivicallyApp::App
       return { error: true, reason: "Cannot remove system app" }
     end
 
-    UserCustomField.transaction do
-      UserCustomField.delete_all(user_id: user_id, name: app_name)
-
-      widget_field_name = "app_widgets_#{app[:widget_position]}".freeze
-      widgets = user.send(widget_field_name)
-
-      user.custom_fields[widget_field_name] = widgets - [app_name]
-
-      user.save_custom_fields(true)
+    unless user.custom_fields[app.name]
+      return { error: true, reason: "User has not added app" }
     end
 
-    { success: true, app_name: app_name }
+    UserCustomField.where(user_id: user.id, name: app.name).delete_all
+
+    { success: true, app_name: app.name }
   end
 
   def self.update(user, app_name, app_data, save = true)
 
     unless app_exists(app_name)
       return { error: true, reason: "App does not exist" }
+    end
+
+    unless user.custom_fields[app_name]
+      return { error: true, reason: "User has not added app" }
     end
 
     widget_data = app_data.with_indifferent_access[:widget]
@@ -178,19 +200,20 @@ class CivicallyApp::App
     end
   end
 
-  def batch_update(user, apps)
+  def self.batch_update(user, apps)
     results = {}
 
     UserCustomField.transaction do
-      app.each do |app|
+      apps.each do |a|
+        app = a.to_h
         results[app[:name]] = self.update(user, app[:name], app.except(:name))
       end
     end
 
     errors = []
     results.each do |app_name, result|
-      if result.error
-        errors.push(app: app_name, reason: result.reason)
+      if result[:error]
+        errors.push(app: app_name, reason: result[:reason])
       end
     end
 

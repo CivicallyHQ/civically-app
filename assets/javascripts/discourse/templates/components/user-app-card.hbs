@@ -9,9 +9,11 @@
         {{app-title app.name}}
       </span>
     {{/if}}
-    <a class="remove p-link" {{action 'removeApp'}}>
-      {{i18n 'app.remove.btn'}}
-    </a>
+    {{#if canRemove}}
+      <a class="remove p-link" {{action 'removeApp'}}>
+        {{i18n 'app.remove.btn'}}
+      </a>
+    {{/if}}
   </div>
   <div class="app-widget">
     <div class="title">
@@ -29,7 +31,7 @@
       <span>{{i18n 'app.version'}}:</span>
       {{app.version}}
     </div>
-    <a class="change-position p-link" {{action 'updateApp'}}>
+    <a class="edit p-link" {{action 'updateApp'}}>
       {{i18n 'app.data.edit.action'}}
     </a>
   </div>

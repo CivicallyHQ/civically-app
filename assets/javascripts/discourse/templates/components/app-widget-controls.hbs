@@ -1,6 +1,8 @@
-<div class='user-control'>
-  <a class="edit-sidebars" {{action 'editSidebars'}}>{{i18n editText}}</a>
-</div>
-<div class="user-control">
-  <a class="add-to-sidebars" {{action 'addToSidebars'}}>{{i18n 'app.add.btn'}}</a>
-</div>
+{{#if showControls}}
+  <div class='user-control'>
+    <a class="edit-sidebars" {{action 'editSidebars'}}>{{i18n editText}}</a>
+  </div>
+  <div class="user-control">
+    <a class="add-to-sidebars" {{action 'addToSidebars'}}>{{i18n 'app.add.btn'}}</a>
+  </div>
+{{/if}}

@@ -24,7 +24,6 @@ export default function(appName) {
 
       return {
         locked,
-        mouseover: false,
         appData,
         app
       };
@@ -56,12 +55,11 @@ export default function(appName) {
     html(attrs, state) {
       const { category, editing, side } = attrs;
 
-      // state is null sometimes;
+      // state is null sometimes
       if (!state) {
         state = this.defaultState(attrs);
       }
 
-      const mouseover = state.mouseover;
       const locked = state.locked;
       const app = state.app;
       const appData = state.appData;
@@ -89,38 +87,6 @@ export default function(appName) {
       }
 
       return html;
-    },
-
-    setupMouseEvents() {
-      Ember.run.scheduleOnce('afterRender', () => {
-        const $app = $(`.${dasherizedAppName}.app-widget`);
-        $app.on('mouseenter', () => this.mouseEnter());
-        $app.on('mouseleave', () => this.mouseLeave());
-      });
-    },
-
-    teardownMouseEvents() {
-      const $app = $(`.${dasherizedAppName}.app-widget`);
-      $app.off('mouseenter', () => this.mouseEnter());
-      $app.off('mouseleave', () => this.mouseLeave());
-    },
-
-    transform() {
-      this.setupMouseEvents();
-    },
-
-    destroy() {
-      this.teardownMouseEvents();
-    },
-
-    mouseEnter() {
-      this.state.mouseover = true;
-      this.scheduleRerender();
-    },
-
-    mouseLeave() {
-      this.state.mouseover = false;
-      this.scheduleRerender();
     },
 
     removeAppWidget() {

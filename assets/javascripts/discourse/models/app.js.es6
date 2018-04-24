@@ -4,7 +4,7 @@ const App = Discourse.Model.extend();
 
 App.reopenClass({
   add(userId, app) {
-    return ajax('/apps/add', { type: 'POST', data: {
+    return ajax('/app/add', { type: 'POST', data: {
       user_id: userId,
       app
     }});
@@ -27,10 +27,15 @@ App.reopenClass({
   },
 
   batchUpdate(userId, apps) {
-    return ajax('/app/batch-update', { type: 'POST', data: {
-      user_id: userId,
-      apps
-    }});
+    return ajax('/app/batch-update', {
+      type: 'POST',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify({
+        user_id: userId,
+        apps
+      })
+    });
   }
 });
 
