@@ -127,8 +127,6 @@ class CivicallyApp::App
       return { error: true, reason: "App already added" }
     end
 
-    app_data['enabled'] = false if app_data['enabled'].blank?
-
     if widget = app_data['widget']
       widget['position'] = 'left' if !widget['position']
 
@@ -227,33 +225,23 @@ class CivicallyApp::App
   def self.create_petition_topic(user, opts)
     category_id = opts[:app_category_id] || SiteSetting.app_petition_category_id
 
-    topic_params = {
+    petition = CivicallyPetition::Petition.create(user,
       title: opts[:name],
+      id: 'app',
       category: category_id,
       featured_link: opts[:repository_url],
-      skip_validations: true,
-      topic_custom_fields: {
-        subtype: 'voting',
-        petition: true,
-        petition_id: 'app',
-        petition_status: 'open'
-      }
-    }
+    )
 
-    result = TopicCreator.create(user, Guardian.new(user), topic_params)
-
-    if result.errors.any?
-      raise StandardError.new I18n.t('app.error.failed_to_create_petition_topic', errors: result.errors)
-    else
-      manager = NewPostManager.new(user,
-        raw: opts[:post],
-        topic_id: result.id,
-        skip_validations: true
-      )
-
-      result = manager.perform
+    if petition.errors.any?
+      raise StandardError.new I18n.t('app.error.failed_to_create_petition_topic', errors: petition.errors)
     end
 
-    result
+    manager = NewPostManager.new(user,
+      raw: opts[:post],
+      topic_id: petition.id,
+      skip_validations: true
+    )
+
+    manager.perform
   end
 end
