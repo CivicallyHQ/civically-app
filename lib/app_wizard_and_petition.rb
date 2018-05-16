@@ -1,9 +1,7 @@
 DiscourseEvent.on(:custom_wizard_ready) do
-  unless PluginStoreRow.exists?(plugin_name: 'custom_wizard', key: 'app_petition')
-    CustomWizard::Wizard.add_wizard(File.read(File.join(
-      Rails.root, 'plugins', 'civically-app', 'config', 'wizards', 'app_petition.json'
-    )))
-  end
+  CustomWizard::Wizard.add_wizard(File.read(File.join(
+    Rails.root, 'plugins', 'civically-app', 'config', 'wizards', 'app_petition.json'
+  )))
 
   CustomWizard::Builder.add_step_handler('app_petition') do |builder|
     if builder.updater && builder.updater.step && builder.updater.step.id === 'repository'
@@ -64,7 +62,26 @@ DiscourseEvent.on(:custom_wizard_ready) do
           params[:app_category_id] = submission[:category_id].to_i if submission[:category_id].to_i > 0
         end
 
-        result = CivicallyApp::App.create_petition_topic(user, params)
+        category_id = opts[:app_category_id] || SiteSetting.app_petition_category_id
+
+        petition = CivicallyPetition::Petition.create(user,
+          title: opts[:name],
+          id: 'app',
+          category: category_id,
+          featured_link: opts[:repository_url],
+        )
+
+        if petition.errors.any?
+          raise StandardError.new I18n.t('app.error.failed_to_create_petition_topic', errors: petition.errors)
+        end
+
+        manager = NewPostManager.new(user,
+          raw: opts[:post],
+          topic_id: petition.id,
+          skip_validations: true
+        )
+
+        result = manager.perform
 
         if result.errors.any?
           updater.errors.add(:app_petition, result.errors.full_messages.join("\n"))

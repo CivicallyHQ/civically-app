@@ -54,7 +54,7 @@ export default createWidget('app-widget-header', {
 
     // right icon or button
 
-    if (appData.enabled) {
+    if (appData && appData.enabled) {
       contents.push(this.attach('app-widget-menu', {
         category,
         app

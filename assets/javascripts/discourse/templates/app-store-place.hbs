@@ -16,6 +16,10 @@
     <div class="store-apps">
       {{#each model as |a|}}
         {{app-card app=a}}
+      {{else}}
+        <span class="no-apps">
+          {{{i18n 'app.store.place_no_apps' placeName=(place-label currentUser.place_category_id)}}}
+        </span>
       {{/each}}
     </div>
   </div>

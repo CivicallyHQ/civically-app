@@ -39,10 +39,14 @@ class CivicallyApp::App
   end
 
   def image_url
-    if @metadata.respond_to?(:image_url)
-      @metadata.image_url
+    if @metadata.respond_to?(:image_url) && @metadata.image_url
+      if @metadata.image_url =~ %r{\Ahttps?://}i
+        @metadata.image_url
+      else
+        "#{Discourse.base_url}#{@metadata.image_url}"
+      end
     else
-      SiteSetting.default_app_image_url
+      "#{Discourse.base_url}#{SiteSetting.app_default_image_url}"
     end
   end
 
@@ -220,28 +224,5 @@ class CivicallyApp::App
     else
       { success: true, apps: results }
     end
-  end
-
-  def self.create_petition_topic(user, opts)
-    category_id = opts[:app_category_id] || SiteSetting.app_petition_category_id
-
-    petition = CivicallyPetition::Petition.create(user,
-      title: opts[:name],
-      id: 'app',
-      category: category_id,
-      featured_link: opts[:repository_url],
-    )
-
-    if petition.errors.any?
-      raise StandardError.new I18n.t('app.error.failed_to_create_petition_topic', errors: petition.errors)
-    end
-
-    manager = NewPostManager.new(user,
-      raw: opts[:post],
-      topic_id: petition.id,
-      skip_validations: true
-    )
-
-    manager.perform
   end
 end

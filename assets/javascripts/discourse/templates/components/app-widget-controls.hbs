@@ -2,7 +2,9 @@
   <div class='user-control'>
     <a class="edit-sidebars" {{action 'editSidebars'}}>{{i18n editText}}</a>
   </div>
-  <div class="user-control">
-    <a class="add-to-sidebars" {{action 'addToSidebars'}}>{{i18n 'app.add.btn'}}</a>
-  </div>
+{{/if}}
+{{#if showPrompt}}
+  <a href="/app/store" class="store-prompt">
+    {{i18n 'app.store.prompt.install_app'}}
+  </a>
 {{/if}}

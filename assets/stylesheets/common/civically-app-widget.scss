@@ -112,13 +112,20 @@
 
 .app-widget-controls {
   position: absolute;
+  width: 100%;
   bottom: 0;
 
   .user-control {
     width: 30px;
-    display: inline-block;
-    vertical-align: middle;
     text-align: center;
+  }
+
+  &.left .user-control {
+    float: left;
+  }
+
+  &.right .user-control {
+    float: right;
   }
 
   a {

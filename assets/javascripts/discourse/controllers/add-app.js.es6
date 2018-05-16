@@ -11,17 +11,17 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
   @computed('positionToggle')
   widgetPosition(toggle) {
-    return toggle ? 'right' : 'left';
+    return toggle ? 'left' : 'right';
   },
 
   @computed('positionToggle')
   leftPositionClass(toggle) {
-    return toggle ? '' : 'enabled';
+    return toggle ? 'enabled' : '';
   },
 
   @computed('positionToggle')
   rightPositionClass(toggle) {
-    return toggle ? 'enabled' : '';
+    return toggle ? '' : 'enabled';
   },
 
   actions: {

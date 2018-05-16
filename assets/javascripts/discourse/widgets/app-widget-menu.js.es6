@@ -86,16 +86,6 @@ createWidget('app-widget-menu-list', {
       }))
     );
 
-    if (!isSystem) {
-      contents.push(
-        h('li', this.attach('app-widget-menu-item', {
-          action: 'removeApp',
-          label: 'app.remove.title',
-          icon: 'times'
-        }))
-      )
-    }
-
     return contents;
   }
 });

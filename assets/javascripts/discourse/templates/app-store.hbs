@@ -1,15 +1,16 @@
 <div class="app-store">
-  <a href='/w/app-petition' target='_blank'>
-    <div class="pull-right submit p-text p-link">
-      {{i18n 'app.petition.title'}}
-    </div>
-  </a>
+  {{#if currentUser}}
+    <a href='/w/app-petition' target='_blank'>
+      <div class="pull-right submit p-text p-link">
+        {{i18n 'app.petition.title'}}
+      </div>
+    </a>
+  {{/if}}
   <div class="app-general">
     <div class="store-title">
-      {{#link-to 'app.storeGeneral'}}
-        <div class="p-text p-link large">
-          {{i18n 'app.store.general'}}
-        </div>
+      <img src='/images/emoji/twitter/earth_africa.png'>
+      {{#link-to 'app.storeGeneral' class="p-text p-link large"}}
+        {{i18n 'app.store.general'}}
       {{/link-to}}
     </div>
     <div class="store-apps inline">
@@ -18,20 +19,33 @@
       {{/each}}
     </div>
   </div>
-  {{#if showPlaceApps}}
-    <div class='app-place'>
-      <div class="store-title">
-        {{#link-to 'app.storePlace'}}
-          <div class="p-text p-link large">
-            {{place-label currentUser.place_category_id}}
-          </div>
+  <div class='app-place'>
+    <div class="store-title">
+      <img src='/images/emoji/twitter/homes.png'>
+      {{#if currentUser.place_category_id}}
+        {{#link-to 'app.storePlace' class="p-text p-link large"}}
+          {{place-label currentUser.place_category_id}}
         {{/link-to}}
-      </div>
-      <div class="store-apps inline">
+      {{else}}
+        <div class="p-text large">
+          {{i18n 'app.store.place'}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="store-apps inline">
+      {{#if currentUser.place_category_id}}
         {{#each placeApps as |a|}}
           {{app-card app=a}}
+        {{else}}
+          <span class="no-apps">
+            {{{i18n 'app.store.place_no_apps' placeName=(place-label currentUser.place_category_id)}}}
+          </span>
         {{/each}}
-      </div>
+      {{else}}
+        <span class="no-apps">
+          {{i18n 'app.store.place_no_user'}}
+        </span>
+      {{/if}}
     </div>
-  {{/if}}
+  </div>
 </div>

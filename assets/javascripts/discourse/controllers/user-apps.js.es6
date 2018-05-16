@@ -6,7 +6,14 @@ export default Ember.Controller.extend({
     removeApp(app) {
       const user = this.get('currentUser');
       const controller = showModal('remove-app', {
-        model: app
+        model: {
+          app,
+          removedApp: (removedName) => {
+            let apps = this.get('apps');
+            apps = apps.filter((a) => a.name !== removedName);
+            this.set('apps', apps);
+          }
+        }
       });
     },
 

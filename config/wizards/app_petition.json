@@ -2,6 +2,7 @@
   "id": "app_petition",
   "name": "App Petition",
   "background": "AliceBlue",
+  "theme":"Civically Wizards",
   "save_submissions": true,
   "steps": [
     {
@@ -52,8 +53,8 @@
           "choices_preset": "categories",
           "choices_filters": [
             {
-              "key": "custom_fields.place",
-              "value": "true"
+              "key": "custom_fields.is_place",
+              "value": "t"
             }
           ],
           "choices_type": "preset",

@@ -12,7 +12,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
     },
 
     removeApp() {
-      const name = this.get('model.name');
+      const name = this.get('model.app.name');
       const user = this.get('currentUser');
 
       App.remove(user.id, name).then((result) => {
@@ -20,6 +20,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
           removeAppData(user, result.app_name);
           applyAppWidgets(user);
         }
+        this.get("model.removedApp")(name);
         this.send('closeModal');
       }).catch(err => this.flash(extractError(err), 'error'));
     }

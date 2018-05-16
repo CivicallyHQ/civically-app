@@ -1,5 +1,5 @@
 {{#d-modal-body class="add-app" title=title}}
-  {{{i18n 'app.remove.body' appTitle=(app-title model.name)}}}
+  {{{i18n 'app.remove.body' appTitle=(app-title model.app.name)}}}
 {{/d-modal-body}}
 <div class="modal-footer">
   {{d-button action="removeApp" label="app.remove.btn" class="btn-primary"}}

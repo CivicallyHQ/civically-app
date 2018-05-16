@@ -62,14 +62,6 @@ export default createWidget('app-widget-edit', {
       }
     }
 
-    if (app.type !== 'system') {
-      html.push(this.attach('button', {
-        className: 'btn btn-primary action app-widget-remove',
-        icon: 'times',
-        action: 'removeAppWidget',
-      }));
-    }
-
     return html;
   },
 

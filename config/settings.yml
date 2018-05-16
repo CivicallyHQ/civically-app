@@ -7,11 +7,7 @@ plugins:
     type: category_list
     default: 1
     client: true
-  app_store_enabled:
-    default: false
-    client: true
-  app_store_redirect_url:
-    default: '/'
-    client: true
   app_default:
     default: 'civically-navigation|civically-place|civically-user|civically-site'
+  app_default_image_url:
+    default: '/plugins/civically-app/images/default-app-image.png'

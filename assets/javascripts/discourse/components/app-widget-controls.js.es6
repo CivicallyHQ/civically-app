@@ -1,5 +1,5 @@
 import { default as computed, observes, on } from 'ember-addons/ember-computed-decorators';
-import { applyAppWidgets, getUnsavedAppList } from '../lib/app-utilities';
+import { buildWidgetList, getPositionWidgets, applyAppWidgets, getUnsavedAppList } from '../lib/app-utilities';
 import App from '../models/app';
 
 const sidebarControlsBreakpoint = 900;
@@ -19,9 +19,24 @@ export default Ember.Component.extend({
     this.set('editing', false);
   },
 
-  @computed('responsiveView')
-  showControls(responsiveView) {
-    return !this.site.mobileView && !responsiveView;
+  @computed('currentUser.app_data')
+  userWidgetList(appData) {
+    return buildWidgetList(appData);
+  },
+
+  @computed('userWidgetList', 'side')
+  positionWidgets(userWidgetList, side) {
+    return getPositionWidgets(userWidgetList, side);
+  },
+
+  @computed('responsiveView', 'positionWidgets.[]')
+  showControls(responsiveView, positionWidgets) {
+    return positionWidgets.length > 1 && !this.site.mobileView && !responsiveView;
+  },
+
+  @computed('userWidgetList.[]', 'side')
+  showPrompt(userWidgetList, side) {
+    return side === 'right' && userWidgetList.length < 3;
   },
 
   actions: {
@@ -30,7 +45,7 @@ export default Ember.Component.extend({
       const user = this.get('currentUser');
 
       if (editing) {
-        let appData = user.get('app_data');
+        let appData = JSON.parse(JSON.stringify(user.get('app_data')));
         let appList = getUnsavedAppList(appData);
 
         App.batchUpdate(user.id, appList).then((result) => {
@@ -58,10 +73,6 @@ export default Ember.Component.extend({
 
       this.toggleProperty('editing');
       this.appEvents.trigger('sidebars:rerender');
-    },
-
-    addToSidebars() {
-      this.get('router').transitionTo('app.store');
     }
   }
 });

@@ -86,6 +86,24 @@
     margin-top: 10px;
   }
 
+  .store-title {
+    margin-bottom: 10px;
+
+    img {
+      width: 25px;
+      height: 25px;
+      margin-right: 7px;
+    }
+
+    a {
+      color: $primary;
+    }
+
+    .p-text {
+      vertical-align: middle;
+    }
+  }
+
   .store-apps {
     padding: 20px;
     min-height: 250px;
@@ -93,27 +111,29 @@
     box-sizing: border-box;
     position: relative;
     overflow: auto;
-    border: 1px solid $tertiary;
+    background-color: $primary-very-low;
+    border: 1px solid $primary-low;
 
     &.inline {
       white-space: nowrap;
-      display: inline-block;
-
-      .app-card {
-         margin: 0 20px;
-      }
+      display: inline-flex;
     }
 
-    > div.app-card {
-      &:first-of-type {
-        margin-left: 0;
-      }
+    .app-card {
+      margin-right: 20px;
+    }
 
-      &:last-of-type {
-        margin-right: 0;
-      }
+    .no-apps {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%);
     }
   }
+}
+
+.app-general {
+  margin-bottom: 20px;
 }
 
 .app-details {
@@ -126,7 +146,6 @@
   height: 250px;
   border: 1px solid $tertiary;
   background-color: $secondary;
-  margin: 20px 40px 20px 0;
   display: inline-block;
   vertical-align: top;
   position: relative;
@@ -138,8 +157,18 @@
     display: flex;
     justify-content: space-between;
 
+    .user-apps-link {
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      color: $primary;
+    }
+
     button {
       max-height: 32px;
+      white-space: nowrap;
     }
   }
 
@@ -148,16 +177,18 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
-    .app-title, .app-image, .app-about {
+    .app-title, .app-image {
       margin-bottom: 10px;
     }
   }
 
   .app-image {
-    width: 150px;
+    height: 100px;
+    width: 250px;
+    overflow: hidden;
     flex: 0 1 100px;
+    border: 1px solid $primary-low;
 
     img {
       width: 100%;
@@ -171,6 +202,8 @@
   }
 
   .app-gutter {
+    margin-top: auto;
+
     .app-version {
       font-size: 0.9em;
       margin-right: 10px;
@@ -196,13 +229,15 @@
 .app-details .app-card {
   margin: 10px auto;
   width: 80%;
-  height: 80%;
+  height: 500px;
+  max-height: 70vh;
   max-width: 500px;
   display: block;
 
   .app-image {
-    width: 300px;
+    width: 500px;
     height: 300px;
+    overflow: hidden;
     flex: 0 1 auto;
   }
 }
@@ -241,19 +276,29 @@
   }
 }
 
-.user-apps > div:first-of-type {
-  margin-left: 0;
-}
+.user-apps {
+  margin-bottom: 10px;
+  display: flex;
 
-.user-apps > div:last-of-type {
-  margin-right: 0;
-}
+  .app-card {
+    margin-right: 10px;
+  }
 
-.user-apps-link {
-  display: inline-block;
+  div.app-card:last-of-type {
+    margin-right: 0;
+  }
 }
 
 .store-link {
   cursor: pointer;
   text-align: center;
+}
+
+.app-store-btn {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 7px;
+  }
 }

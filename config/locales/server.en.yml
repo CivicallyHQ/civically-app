@@ -2,8 +2,6 @@ en:
   site_settings:
     app_petition_category_id: "App petition category id"
     app_category_id: "App category id"
-    app_store_enabled: "App store enabled"
-    app_store_redirect_url: "App store redirect url"
 
   app:
     petition:
@@ -11,13 +9,7 @@ en:
                   The Civically team and the place will review your submission in that topic."
       intro:
         title: "App Petition"
-        description: |
-          Any user can petition for an app to be added to Civically.
-          <br>
-          <img class='large' src='%{base_url}/plugins/civically-place/images/woman_computer.svg'>
-          <br>
-          Please read <a href='/t/apps-and-app-store'>Adding an App</a> before you start.
-
+        description: This wizard will create a petition to add an app to Civically.
       repository:
         title: "Repository"
         description: "Currently, all apps on Civically must be open source and hosted on GitHub or Bitbucket."
@@ -46,21 +38,15 @@ en:
       place:
         title: "Place (optional)"
         description: |
-          Apps can either be General or for a Place. You can read more about the distinction
-          <a href='%{base_url}/t/app-type' target='_blank'>here<a/>. If your app is general, click the 'Next' button.
+          Apps can either be general or for a place. If your app is general, click 'Next'.
           If your app is for a place, select the place on the list below.
-
         category_id:
           label: "Place"
       submit:
         title: "Submit"
         description: |
-          When you submit this form a petition to create this app will be created.
-          The petition needs at least 30 people to support it.
-          <br>
-          <img class='large' src='%{base_url}/plugins/civically-place/images/ballot_box.png'>
-          <br>
-          Read <a href='/t/apps-and-app-store' target='_blank'>Creating an App</a> to learn more.
+          When you submit this form a petition :ballot_box: to create this app will be created.
+          The petition needs at least 30 votes.
     error:
       default: "We encountered a problem. Please try again."
       failed_to_create_petition_topic: "Failed to create petition topic: %{errors}"
