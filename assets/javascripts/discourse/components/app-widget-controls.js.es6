@@ -34,11 +34,6 @@ export default Ember.Component.extend({
     return positionWidgets.length > 1 && !this.site.mobileView && !responsiveView;
   },
 
-  @computed('userWidgetList.[]', 'side')
-  showPrompt(userWidgetList, side) {
-    return side === 'right' && userWidgetList.length < 3;
-  },
-
   actions: {
     editSidebars() {
       const editing = this.get('editing');

@@ -38,7 +38,7 @@ en:
       store:
         label: "App Store"
         link: "App Store"
-        general: "General Apps"
+        general: "General"
         place: "Place Apps"
         place_no_user: "Set your place to add place apps."
         place_no_apps: "No apps for {{placeName}} yet. Maybe you could <a href='/w/app-petition'>submit one</a>?"

@@ -62,13 +62,13 @@ DiscourseEvent.on(:custom_wizard_ready) do
           params[:app_category_id] = submission[:category_id].to_i if submission[:category_id].to_i > 0
         end
 
-        category_id = opts[:app_category_id] || SiteSetting.app_petition_category_id
+        category_id = params[:app_category_id] || SiteSetting.app_petition_category_id
 
         petition = CivicallyPetition::Petition.create(user,
-          title: opts[:name],
+          title: params[:name],
           id: 'app',
           category: category_id,
-          featured_link: opts[:repository_url],
+          featured_link: params[:repository_url],
         )
 
         if petition.errors.any?
@@ -76,7 +76,7 @@ DiscourseEvent.on(:custom_wizard_ready) do
         end
 
         manager = NewPostManager.new(user,
-          raw: opts[:post],
+          raw: params[:post],
           topic_id: petition.id,
           skip_validations: true
         )
