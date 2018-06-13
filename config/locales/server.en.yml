@@ -5,8 +5,8 @@ en:
 
   app:
     petition:
-      procedure: "When you submit your app, a new topic will be created in <a href='/c/app-submissions' target='_blank'>App Submissions</a>.
-                  The Civically team and the place will review your submission in that topic."
+      procedure: "When you submit your app, a petition will be created.
+                  The Civically Team will review your submission in that topic."
       intro:
         title: "App Petition"
         description: This wizard will create a petition to add an app to Civically.
@@ -38,14 +38,14 @@ en:
       place:
         title: "Place (optional)"
         description: |
-          Apps can either be general or for a place. If your app is general, click 'Next'.
-          If your app is for a place, select the place on the list below.
+          Apps can either be general or for a specific place. If your app is general, click 'Next'.
+          If your app is for a specific place, select it from the list below.
         category_id:
           label: "Place"
       submit:
         title: "Submit"
         description: |
-          When you submit this form a petition :ballot_box: to create this app will be created.
+          When you submit this form a petition :ballot_box: to add this app to Civically will be created.
           The petition needs at least 30 votes.
     error:
       default: "We encountered a problem. Please try again."

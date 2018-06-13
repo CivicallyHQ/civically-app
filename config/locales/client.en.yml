@@ -39,11 +39,10 @@ en:
         label: "App Store"
         link: "App Store"
         general: "General"
-        place: "Place Apps"
-        place_no_user: "Set your place to add place apps."
-        place_no_apps: "No apps for {{placeName}} yet. Maybe you could <a href='/w/app-petition'>submit one</a>?"
-        prompt:
-          install_app: "Want to get more involved?"
+        town:
+          label: "Town Apps"
+          no_user: "Set your town to add town apps."
+          no_apps: "No apps for {{townName}} yet. Maybe you could <a href='/w/app-petition'>submit one</a>?"
     topic:
       type:
         app_submit:
@@ -58,7 +57,3 @@ en:
         resolution:
           accepted: "This petition for an app has been accepted. <a href='{{link}}' class='p-text p-link'>Check out the app on the store</a>."
           rejected: "This petition for an app has been rejected. <a href='/t/apps-and-app-store' target='_blank'>Learn more about submitting a new app</a>."
-
-  wizard_js:
-    app:
-      place_none: "Select a Place"

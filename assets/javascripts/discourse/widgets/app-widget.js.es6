@@ -27,7 +27,7 @@ export function createAppWidget(name, app) {
             if ($.isArray(result)) {
               result = result.concat(appResult);
             } else {
-              result = Object.assign({}, result, appResult);
+              result = $.extend({}, result, appResult);
             }
           }
 
@@ -48,7 +48,7 @@ export function createAppWidget(name, app) {
           if ($.isArray(widget[k])) {
             widget[k] = widget[k].concat(app[k]);
           } else {
-            widget[k] = Object.assign({}, widget[k], app[k]);
+            widget[k] = $.extend({}, widget[k], app[k]);
           }
         }
       } else if (typeof base[k] === "string") {

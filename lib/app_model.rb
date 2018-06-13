@@ -82,8 +82,8 @@ class CivicallyApp::App
     @general_apps ||= store_apps.select { |a| !a.place_category_id }
   end
 
-  def self.place_apps(user)
-    @place_apps ||= store_apps.select { |a| a.place_category_id.to_i === user.custom_fields['place_category_id'].to_i }
+  def self.town_apps(user)
+    @town_apps ||= store_apps.select { |a| a.place_category_id.to_i === user.custom_fields['town_category_id'].to_i }
   end
 
   def self.user_apps(user)

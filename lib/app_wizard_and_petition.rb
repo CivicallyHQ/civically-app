@@ -1,7 +1,9 @@
 DiscourseEvent.on(:custom_wizard_ready) do
-  CustomWizard::Wizard.add_wizard(File.read(File.join(
-    Rails.root, 'plugins', 'civically-app', 'config', 'wizards', 'app_petition.json'
-  )))
+  if !CustomWizard::Wizard.find('app_petition') || Rails.env.development?
+    CustomWizard::Wizard.add_wizard(File.read(File.join(
+      Rails.root, 'plugins', 'civically-app', 'config', 'wizards', 'app_petition.json'
+    )))
+  end
 
   CustomWizard::Builder.add_step_handler('app_petition') do |builder|
     if builder.updater && builder.updater.step && builder.updater.step.id === 'repository'
@@ -98,9 +100,7 @@ DiscourseEvent.on(:petition_ready) do
     status = topic.custom_fields['petition_status']
 
     if status === 'accepted'
-      if app_category_id = topic.custom_fields['app_category_id']
-        topic.category_id = app_category_id
-      else
+      if topic.category_id = SiteSetting.app_petition_category_id
         topic.category_id = SiteSetting.app_category_id
       end
 

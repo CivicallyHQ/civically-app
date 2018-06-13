@@ -9,6 +9,12 @@ export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
   editing: false,
 
+  didInsertElement() {
+    Ember.run.scheduleOnce('afterRender', () => {
+      this.$().appendTo(this.$().closest('.app-widget-controls-container').parent());
+    });
+  },
+
   @computed('editing')
   editText(editing) {
     return `app.widget.position.${editing ? 'save' : 'edit'}`;

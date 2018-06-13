@@ -1,8 +1,7 @@
 {
   "id": "app_petition",
   "name": "App Petition",
-  "background": "AliceBlue",
-  "theme":"Civically Wizards",
+  "theme": "Civically Wizards",
   "save_submissions": true,
   "steps": [
     {
@@ -57,8 +56,7 @@
               "value": "t"
             }
           ],
-          "choices_type": "preset",
-          "dropdown_none": "app.place_none"
+          "choices_type": "preset"
         }
       ]
     },

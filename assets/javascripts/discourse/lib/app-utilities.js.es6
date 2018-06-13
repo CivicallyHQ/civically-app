@@ -4,7 +4,7 @@ import { getOwner } from 'discourse-common/lib/get-owner';
 const buildWidgetList = function(appData) {
   return _.sortBy(Object.keys(appData).reduce(function(ws, name){
     if (appData[name] && appData[name].widget) {
-      ws.push(Object.assign({}, { name }, appData[name].widget));
+      ws.push($.extend({}, { name }, appData[name].widget));
     };
     return ws;
   }, []), 'order');

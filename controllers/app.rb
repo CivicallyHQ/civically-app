@@ -8,7 +8,7 @@ PERMITTED_ATTRIBUTES = [
 ]
 
 class CivicallyApp::AppController < ::ApplicationController
-  before_action :ensure_logged_in, only: [:place, :user, :add, :remove, :update]
+  before_action :ensure_logged_in, only: [:town, :user, :add, :remove, :update]
   before_action :find_user, only: [:add, :remove, :update, :batch_update]
 
   attr_accessor :user
@@ -21,8 +21,8 @@ class CivicallyApp::AppController < ::ApplicationController
     render_serialized(CivicallyApp::App.general_apps, CivicallyApp::AppSerializer)
   end
 
-  def place
-    render_serialized(CivicallyApp::App.place_apps(current_user), CivicallyApp::AppSerializer)
+  def town
+    render_serialized(CivicallyApp::App.town_apps(current_user), CivicallyApp::AppSerializer)
   end
 
   def user

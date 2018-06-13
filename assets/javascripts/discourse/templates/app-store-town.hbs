@@ -4,21 +4,27 @@
       {{d-icon 'chevron-left'}}
     </div>
   {{/link-to}}
-  <div class="p-text large">
-    {{place-label currentUser.place_category_id}}
+
+  <div class="store-title">
+    <img src='/images/emoji/twitter/cityscape.png'>
+    <div class="p-text large">
+      {{place-label currentUser.town_category_id}}
+    </div>
   </div>
+
   <a href='/w/app-petition' target='_blank'>
     <div class="pull-right submit p-text p-link">
       {{i18n 'app.petition.title'}}
     </div>
   </a>
-  <div class='app-place'>
+
+  <div class='app-town'>
     <div class="store-apps">
       {{#each model as |a|}}
         {{app-card app=a}}
       {{else}}
         <span class="no-apps">
-          {{{i18n 'app.store.place_no_apps' placeName=(place-label currentUser.place_category_id)}}}
+          {{{i18n 'app.store.town.no_apps' townName=(place-label currentUser.town_category_id)}}}
         </span>
       {{/each}}
     </div>

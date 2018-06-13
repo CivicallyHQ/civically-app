@@ -4,8 +4,8 @@ export default Ember.Route.extend({
   model() {
     let hash = { general: ajax('/app/store/general') };
 
-    if (this.get('currentUser') && this.get('currentUser.place_category_id')) {
-      hash['place'] = ajax('/app/store/place');
+    if (this.get('currentUser') && this.get('currentUser.town_category_id')) {
+      hash['town'] = ajax('/app/store/town');
     }
 
     return Ember.RSVP.hash(hash);
@@ -13,7 +13,7 @@ export default Ember.Route.extend({
 
   setupController(controller, model) {
     controller.setProperties({
-      placeApps: model.place,
+      townApps: model.town,
       generalApps: model.general
     });
   }

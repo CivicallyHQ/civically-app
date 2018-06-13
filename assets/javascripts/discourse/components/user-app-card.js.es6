@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     const setAppWithData = () => {
       if (self._state === 'destroying') return;
       let appData = user.get('app_data');
-      self.set('appWithData', Object.assign({}, { name }, appData[name]));
+      self.set('appWithData', $.extend({}, { name }, appData[name]));
     }
 
     setAppWithData();
