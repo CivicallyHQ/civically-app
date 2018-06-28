@@ -4,14 +4,19 @@
       {{d-icon 'chevron-left'}}
     </div>
   {{/link-to}}
+
   <div class="p-text large">
     {{i18n 'app.store.general'}}
   </div>
-  <a href='/w/app-petition' target='_blank'>
-    <div class="pull-right submit p-text p-link">
-      {{i18n 'app.petition.title'}}
-    </div>
-  </a>
+
+  {{#if currentUser}}
+    <a href='/w/app-petition' target='_blank'>
+      <div class="pull-right submit p-text p-link">
+        {{i18n 'app.petition.title'}}
+      </div>
+    </a>
+  {{/if}}
+
   <div class="app-general">
     <div class="store-apps">
       {{#each model as |a|}}
