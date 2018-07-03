@@ -4,7 +4,6 @@ en:
       guest: "You need an account to use this feature"
       no_results: "No apps available"
       about: "About"
-      widget: "Widget"
       version: "Version"
       data:
         edit:
@@ -40,7 +39,7 @@ en:
         link: "App Store"
         general: "General"
         town:
-          label: "Town Apps"
+          label: "Town"
           no_user: "Set your town to add town apps."
           no_apps: "No apps for {{townName}} yet. Maybe you could <a href='/w/app-petition'>submit one</a>?"
     topic:
