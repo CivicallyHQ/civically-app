@@ -2,8 +2,6 @@ import { default as computed, observes, on } from 'ember-addons/ember-computed-d
 import { buildWidgetList, getPositionWidgets, applyAppWidgets, getUnsavedAppList } from '../lib/app-utilities';
 import App from '../models/app';
 
-const sidebarControlsBreakpoint = 900;
-
 export default Ember.Component.extend({
   classNameBindings: [':app-widget-controls', 'side'],
   router: Ember.inject.service('-routing'),
@@ -27,7 +25,11 @@ export default Ember.Component.extend({
 
   @computed('currentUser.app_data')
   userWidgetList(appData) {
-    return buildWidgetList(appData);
+    if (appData) {
+      return buildWidgetList(appData);
+    } else {
+      return [];
+    }
   },
 
   @computed('userWidgetList', 'side')

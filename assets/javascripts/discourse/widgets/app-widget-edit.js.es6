@@ -8,18 +8,14 @@ import {
 
 import { createWidget } from 'discourse/widgets/widget';
 
-const isNumeric = function(val) {
-  return !isNaN(parseFloat(val)) && isFinite(val);
-};
-
 export default createWidget('app-widget-edit', {
   tagName: 'div.app-widget-edit',
   buildKey: (attrs) => `${attrs.app.name}-widget-edit`,
 
-  defaultState(attrs) {
+  defaultState() {
     return {
       index: null
-    }
+    };
   },
 
   buildClasses(attrs) {
