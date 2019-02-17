@@ -1,0 +1,58 @@
+fr:
+  js:
+    app:
+      guest: "Vous avez besoin d'un compte pour utiliser cette fonctionnalité"
+      no_results: "Aucune application disponible"
+      about: "A propos"
+      version: "Version"
+      data:
+        edit:
+          action: "Modifier"
+          title: "Modifier les données de l'application"
+      widget:
+        label: "Widget"
+        position:
+          label: "Position"
+          edit: "Modifier"
+          save: "Sauvegarder"
+          description: "Sélectionnez une position pour le widget {{appTitle}}."
+          left: "Gauche"
+          right: "Droite"
+
+      petition:
+        title: "Soumettre une application"
+      add:
+        title: "Ajouter une application"
+        btn: "Ajouter"
+      added:
+        btn: "Ajouté"
+      authors: "auteurs"
+      remove:
+        title: "Supprimer l'application"
+        body: "Êtes-vous sûr de vouloir supprimer {{appTitle}} de votre compte?"
+        btn: "Retirer"
+      user:
+        label: "Applications"
+        title: 'Vos applications'
+      store:
+        label: "Magasin d'applications"
+        link: "Magasin d'applications"
+        general: "Général"
+        town:
+          label: "Ville"
+          no_user: "Configurez votre ville pour ajouter des applications de ville."
+          no_apps: "Aucune application pour {{townName}} pour le moment. Peut-être pourriez-vous <a href='/w/app-petition'>en soumettre un</a>?"
+    topic:
+      type:
+        app_submit:
+          title_placeholder: "Utilisez un nom clair et simple"
+          body_placeholder: "Décrivez ce que l'application fait"
+
+    petition:
+      app:
+        topic_title_start: "Nouvelle application:"
+        petitioner: "Merci d'avoir soumis une application. Nous vous contacterons sous peu en répondant sur ce sujet. Vous pouvez ajouter des détails supplémentaires à votre soumission en modifiant votre message ci-dessous."
+        intro: "Ceci est une pétition pour une application."
+        resolution:
+          accepted: "Cette pétition pour une application a été acceptée. <a href='{{link}}' class='p-text p-link'>Découvrez l'application sur le magasin</a>."
+          rejected: "Cette demande d'application a été rejetée. <a href='/t/apps-and-app-store' target='_blank'>En savoir plus sur la soumission d'une nouvelle application</a>."

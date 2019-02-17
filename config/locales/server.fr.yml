@@ -1,0 +1,76 @@
+fr:
+  site_settings:
+    app_petition_category_id: "Catégorie de demande d'application"
+    app_category_id: "Identifiant de la catégorie d'application"
+
+  app:
+    petition:
+      procedure: "Lorsque vous soumettez votre application, une pétition est créée. L'équipe civiquement examinera votre soumission dans ce sujet."
+      intro:
+        title: "App Pétition"
+        description: Cet assistant créera une pétition pour ajouter une application à Civically.
+      repository:
+        title: "Dépôt"
+        description: "Actuellement, toutes les applications sur Civically doivent être open source et hébergées sur GitHub ou Bitbucket."
+        url:
+          label: "URL du référentiel"
+          placeholder: "par exemple. https://github.com/angusmcleod/discourse-locations"
+          error: "L'URL du référentiel d'applications est obligatoire."
+        error:
+          invalid: "S'il vous plaît ajouter une URL valide"
+          wrong_host: "Actuellement, toutes les applications doivent être hébergées sur GitHub ou Bitbucket."
+          not_available: "Nous n'avons pas pu accéder à votre référentiel d'applications"
+          duplicate: "Le référentiel a déjà été soumis:<a href='%{url}'>%{title}</a>"
+      details:
+        title: "Détails"
+        description: "Donnez à votre application un nom et une description."
+        name:
+          label: "Prénom"
+          placeholder: "par exemple. Alertes de quartier"
+          error: "Le nom de l'application est requis."
+        error:
+          identical: "Le nom est déjà utilisé:<a href='%{url}'>%{title}</a>"
+        post:
+          label: "Description"
+          placeholder: "Expliquez ce que fait votre application."
+          error: "Description de l'application est requise."
+      place:
+        title: "Lieu (optionnel)"
+        description: |
+          Les applications peuvent être générales ou pour un lieu spécifique. Si votre application est générale, cliquez sur "Suivant".
+          Si votre application concerne un lieu spécifique, sélectionnez-la dans la liste ci-dessous.
+        category_id:
+          label: "Place"
+      submit:
+        title: "Soumettre"
+        description: |
+          Lorsque vous soumettez ce formulaire, une pétition: ballot_box: pour ajouter cette application à Civically sera créée.
+          La pétition nécessite au moins 30 voix.
+    error:
+      default: "Nous avons rencontré un problème. Veuillez réessayer."
+      failed_to_create_petition_topic: "Échec de la création du sujet de la pétition:%{errors}"
+
+  about_apps:
+    title: "À propos des applications"
+    body: |
+      ** Les applications et l'App Store sont des fonctionnalités planifiées. Ils ne sont pas actuellement en direct. [Participez à la discussion sur ce plan ici] (/ t / apps-and-app-store). **
+
+      Les applications fournissent des services civiques, aident à résoudre des problèmes civiques ou contribuent à la vie civique dans un lieu. Civically App Store est la version civique de l'App Store sur votre téléphone portable. Toutes les applications doivent être open source et hébergées sur GitHub ou BitBucket.
+
+      Le processus pour ajouter une application à Civically est le suivant:
+
+      1. Terminez l’assistant de demande d’application.
+
+      a. URL du référentiel: Entrez l'URL de votre référentiel open source sur GitHub ou BitBucket. Ne pas ajouter une extension .git. L'URL sera utilisé comme lien vers votre référentiel.
+
+      b. Ajoutez un nom pour votre application et une description de ce qu’elle fait. Le nom sera utilisé comme titre de la requête de votre application et la description sera le premier article du sujet de la pétition.
+
+      c. Ajouter un lieu. Si l'application est spécifique à un lieu, par exemple cela permet aux gens de recevoir des alertes sur les applications de planification dans la ville de Perth, puis d'ajouter cet endroit ici. S'il n'est pas spécifique à un lieu, cliquez sur Suivant.
+
+      2. Obtenez un soutien pour votre pétition d'application. Chaque pétition d’application nécessite au moins 50 votes avant de pouvoir être ajoutée à Civically.
+
+      3. L'application est ajoutée à staging.civically.io pour vérifier que la fonctionnalité fonctionne comme décrit. Toutes les applications doivent être approuvées par un testeur Civically lors de la mise en scène. Toutes les applications doivent rester sur la scène pendant au moins une semaine.
+
+      4. Lorsqu'une application réussit à être mise en scène, elle est soumise à l'approbation finale du modérateur du lieu ou du site.
+
+      5. Si l'application reçoit l'approbation finale, elle est disponible sur l'appli Civically App Store et le sujet de pétition d'application est converti en sujet de révision pour l'application.
