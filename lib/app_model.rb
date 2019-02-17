@@ -24,18 +24,33 @@ class CivicallyApp::App
 
   def place_category_id
     name_arr = @metadata.name.split('_')
-    place = name_arr[1]
+    category = nil
 
-    if place
-      slug_arr = place.split('-')
+    if name_arr.length > 1
+      place_slugs = name_arr.drop(1)
 
-      country_slug = slug_arr.first
-      town_slug = slug_arr.last
+      country_slug = place_slugs[0]
+      town_slug = nil
+      neighbourhood_slug = nil
 
-      if category = Category.find_by_slug(town_slug, country_slug)
-        category.id
+      if place_slugs.length > 1
+        town_slug = place_slugs[1]
+
+        if place_slugs.length > 2
+          neighbourhood_slug = place_slugs[2]
+        end
+      end
+
+      if neighbourhood_slug
+        category = Category.find_by_slug(neighbourhood_slug, town_slug, country_slug)
+      elsif town_slug
+        category = Category.find_by_slug(town_slug, country_slug)
+      else
+        category = Category.find_by_slug(country_slug)
       end
     end
+
+    category ? category.id : nil
   end
 
   def image_url
@@ -84,6 +99,10 @@ class CivicallyApp::App
 
   def self.town_apps(user)
     @town_apps ||= store_apps.select { |a| a.place_category_id.to_i === user.custom_fields['town_category_id'].to_i }
+  end
+
+  def self.neighbourhood_apps(user)
+    @neighbourhood_apps ||= store_apps.select { |a| a.place_category_id.to_i === user.custom_fields['neighbourhood_category_id'].to_i }
   end
 
   def self.user_apps(user)

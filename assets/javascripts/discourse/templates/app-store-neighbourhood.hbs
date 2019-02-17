@@ -1,0 +1,34 @@
+<div class="app-store">
+  {{#link-to 'app.store'}}
+    <div class="p-text large">
+      {{d-icon 'chevron-left'}}
+    </div>
+  {{/link-to}}
+
+  <div class="store-title">
+    <img src='/images/emoji/twitter/cityscape.png'>
+    <div class="p-text large">
+      {{place-label currentUser.neighbourhood_category_id}}
+    </div>
+  </div>
+
+  {{#if currentUser}}
+    <a href='/w/app-petition' target='_blank'>
+      <div class="pull-right submit p-text p-link">
+        {{i18n 'app.petition.title'}}
+      </div>
+    </a>
+  {{/if}}
+
+  <div class='app-neighbourhood'>
+    <div class="store-apps">
+      {{#each model as |a|}}
+        {{app-card app=a}}
+      {{else}}
+        <span class="no-apps">
+          {{{i18n 'app.store.neighbourhood.no_apps' neighbourhoodName=(place-label currentUser.neighbourhood_category_id)}}}
+        </span>
+      {{/each}}
+    </div>
+  </div>
+</div>

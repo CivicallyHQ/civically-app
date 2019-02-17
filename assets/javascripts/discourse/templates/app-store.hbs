@@ -48,4 +48,33 @@
       {{/if}}
     </div>
   </div>
+  <div class='app-neighbourhood'>
+    <div class="store-title">
+      <img src='/images/emoji/twitter/cityscape.png'>
+      {{#if currentUser.neighbourhood_category_id}}
+        {{#link-to 'app.storeNeighbourhood' class="p-text p-link large"}}
+          {{place-label currentUser.neighbourhood_category_id}}
+        {{/link-to}}
+      {{else}}
+        <div class="p-text large">
+          {{i18n 'app.store.neighbourhood.label'}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="store-apps inline">
+      {{#if currentUser.neighbourhood_category_id}}
+        {{#each neighbourhoodApps as |a|}}
+          {{app-card app=a}}
+        {{else}}
+          <span class="no-apps">
+            {{{i18n 'app.store.neighbourhood.no_apps' neighbourhoodName=(place-label currentUser.neighbourhood_category_id)}}}
+          </span>
+        {{/each}}
+      {{else}}
+        <span class="no-apps">
+          {{i18n 'app.store.neighbourhood.no_user'}}
+        </span>
+      {{/if}}
+    </div>
+  </div>
 </div>

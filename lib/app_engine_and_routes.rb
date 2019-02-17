@@ -11,6 +11,7 @@ CivicallyApp::Engine.routes.draw do
   get "store" => "app#index"
   get "store/general" => "app#general"
   get "store/town" => "app#town"
+  get "store/neighbourhood" => "app#neighbourhood"
   get "user" => "app#user"
   get "details/:name" => "app#details"
   get "submit" => "app#index"

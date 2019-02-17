@@ -42,6 +42,10 @@ en:
           label: "Town"
           no_user: "Set your town to add town apps."
           no_apps: "No apps for {{townName}} yet. Maybe you could <a href='/w/app-petition'>submit one</a>?"
+        neighbourhood:
+          label: "Neighbourhood"
+          no_user: "Set your neighbourhood to add neighbourhood apps."
+          no_apps: "No apps for {{neighbourhoodName}} yet. Maybe you could <a href='/w/app-petition'>submit one</a>?"
     topic:
       type:
         app_submit:
